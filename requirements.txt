@@ -30,3 +30,4 @@ rest-framework-simplejwt==0.0.2
 six==1.17.0
 sqlparse==0.5.3
 urllib3==2.3.0
+setuptools==67.8.0
