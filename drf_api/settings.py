@@ -34,7 +34,7 @@ REST_USE_JWT = True
 JWT_AUTH_SECURE = True
 JWT_AUTH_COOKIE = 'my-app-auth'
 JWT_AUTH_REFRESH_COOKIE = 'my-refresh-token'
-JWT_AUTH_SAMESITE = 'None'
+JWT_AUTH_SAMESITE = 'None'  # Necessary for cross-origin requests
 
 REST_AUTH_SERIALIZERS = {
     'USER_DETAILS_SERIALIZER': 'drf_api.serializers.CurrentUserSerializer'
@@ -51,7 +51,6 @@ CSRF_TRUSTED_ORIGINS = [
     'https://3000-fraserivison-waveapp-xp3woia850v.ws-eu117.gitpod.io',
 ]
 
-# Make sure the frontend Gitpod URL is properly added
 CORS_ALLOWED_ORIGINS = [
     "https://3000-fraserivison-waveapp-xp3woia850v.ws-eu117.gitpod.io",
 ]
@@ -59,10 +58,15 @@ CORS_ALLOWED_ORIGINS = [
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOW_ALL_ORIGINS = False  # Disable allowing all origins
 
-# Optional for specific dev purposes (keep only if necessary)
-# CORS_ALLOWED_ORIGIN_REGEXES = [
-#     r"^https:\/\/.*\.codeinstitute-ide\.net$",
-# ]
+# Allow OPTIONS requests
+CORS_ALLOW_METHODS = [
+    'GET',
+    'POST',
+    'PUT',
+    'PATCH',
+    'DELETE',
+    'OPTIONS',
+]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -93,7 +97,7 @@ INSTALLED_APPS = [
 SITE_ID = 1
 
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',  # Make sure this is first
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -164,4 +168,5 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
 
