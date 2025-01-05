@@ -14,6 +14,7 @@ from pathlib import Path
 import os
 import re
 import dj_database_url
+import corsheaders
 
 if os.path.exists('env.py'):
     import env
@@ -65,17 +66,20 @@ ALLOWED_HOSTS = ['*', os.environ.get('ALLOWED_HOST')]
 
 CSRF_TRUSTED_ORIGINS = [
     'https://*.gitpod.io',
+    'https://3000-fraserivison-waveapp-xp3woia850v.ws-eu117.gitpod.io/',
 ]
 
 
 if 'CLIENT_ORIGIN' in os.environ:
     CORS_ALLOWED_ORIGINS = [
-        os.environ.get('CLIENT_ORIGIN')
-    ]
+    "https://3000-fraserivison-waveapp-xp3woia850v.ws-eu117.gitpod.io",
+]
 if 'CLIENT_ORIGIN_DEV' in os.environ:
     CORS_ALLOWED_ORIGIN_REGEXES = [
          r"^https:\/\/.*\.codeinstitute-ide\.net$",
     ]
+
+CORS_ALLOW_ALL_ORIGINS = True
 
 CORS_ALLOW_CREDENTIALS = True
 
@@ -119,6 +123,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
 
 
 ROOT_URLCONF = 'drf_api.urls'
