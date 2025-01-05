@@ -65,15 +65,14 @@ DEBUG = 'DEV' in os.environ
 ALLOWED_HOSTS = ['*', os.environ.get('ALLOWED_HOST')]
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://*.gitpod.io',
-    'https://3000-fraserivison-waveapp-xp3woia850v.ws-eu117.gitpod.io/',
+    'https://3000-fraserivison-waveapp-xp3woia850v.ws-eu117.gitpod.io',
 ]
 
 
 if 'CLIENT_ORIGIN' in os.environ:
     CORS_ALLOWED_ORIGINS = [
-    "https://3000-fraserivison-waveapp-xp3woia850v.ws-eu117.gitpod.io",
-]
+        "https://3000-fraserivison-waveapp-xp3woia850v.ws-eu117.gitpod.io",
+    ]
 if 'CLIENT_ORIGIN_DEV' in os.environ:
     CORS_ALLOWED_ORIGIN_REGEXES = [
          r"^https:\/\/.*\.codeinstitute-ide\.net$",
@@ -123,8 +122,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-
-
 
 ROOT_URLCONF = 'drf_api.urls'
 
