@@ -46,22 +46,23 @@ DEBUG = 'DEV' in os.environ
 
 ALLOWED_HOSTS = ['*', os.environ.get('ALLOWED_HOST')]
 
+# CSRF and CORS settings
 CSRF_TRUSTED_ORIGINS = [
     'https://3000-fraserivison-waveapp-xp3woia850v.ws-eu117.gitpod.io',
 ]
 
-if 'CLIENT_ORIGIN' in os.environ:
-    CORS_ALLOWED_ORIGINS = [
-        "https://3000-fraserivison-waveapp-xp3woia850v.ws-eu117.gitpod.io",
-    ]
-else:
-    # Optional: You can keep the regex setup for development purposes if needed
-    CORS_ALLOWED_ORIGIN_REGEXES = [
-        r"^https:\/\/.*\.codeinstitute-ide\.net$",
-    ]
+# Make sure the frontend Gitpod URL is properly added
+CORS_ALLOWED_ORIGINS = [
+    "https://3000-fraserivison-waveapp-xp3woia850v.ws-eu117.gitpod.io",
+]
 
-CORS_ALLOW_ALL_ORIGINS = False  # Ensure this is False to not allow all origins
 CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_ALL_ORIGINS = False  # Disable allowing all origins
+
+# Optional for specific dev purposes (keep only if necessary)
+# CORS_ALLOWED_ORIGIN_REGEXES = [
+#     r"^https:\/\/.*\.codeinstitute-ide\.net$",
+# ]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -122,6 +123,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'drf_api.wsgi.application'
 
+# Database setup
 if 'DEV' in os.environ:
     DATABASES = {
         'default': {
@@ -162,3 +164,4 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
