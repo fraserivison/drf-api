@@ -5,8 +5,8 @@ from .models import Comment
 
 class CommentSerializer(serializers.ModelSerializer):
     """
-    Serializer for the Comment model
-    Adds three extra fields when returning a list of Comment instances
+    Serializer for the Comment model.
+    Includes fields for the user's profile and formatted timestamps.
     """
     owner = serializers.ReadOnlyField(source='owner.username')
     is_owner = serializers.SerializerMethodField()
@@ -35,7 +35,7 @@ class CommentSerializer(serializers.ModelSerializer):
 
 class CommentDetailSerializer(CommentSerializer):
     """
-    Serializer for the Comment model used in Detail view
-    Track is a read only field so that we dont have to set it on each update
+    Serializer for the Comment model used in the Detail view.
+    Track is read-only so it's automatically assigned on creation.
     """
     track = serializers.ReadOnlyField(source='track.id')
