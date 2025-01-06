@@ -4,7 +4,6 @@ from django_filters.rest_framework import DjangoFilterBackend
 from .models import Profile
 from .serializers import ProfileSerializer
 
-
 class ProfileList(generics.ListAPIView):
     """
     List all profiles with track count, followers count, and following count.
@@ -15,7 +14,7 @@ class ProfileList(generics.ListAPIView):
         following_count=Count('owner__following', distinct=True)
     ).order_by('-created_at')
     serializer_class = ProfileSerializer
-    
+
     filter_backends = [
         filters.OrderingFilter,
         DjangoFilterBackend,
@@ -43,5 +42,5 @@ class ProfileDetail(generics.RetrieveUpdateAPIView):
         track_count=Count('owner__track', distinct=True),
         followers_count=Count('owner__followed', distinct=True),
         following_count=Count('owner__following', distinct=True)
-    ).order_by('-created_at') 
+    ).order_by('-created_at')
     serializer_class = ProfileSerializer
