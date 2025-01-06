@@ -92,7 +92,7 @@ INSTALLED_APPS = [
     'profiles',
     'tracks',
     'comments',
-    'likes',
+    'ratings',
     'followers',
 ]
 
