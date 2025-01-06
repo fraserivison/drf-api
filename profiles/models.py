@@ -7,10 +7,12 @@ class Profile(models.Model):
     owner = models.OneToOneField(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    name = models.CharField(max_length=255, blank=True)
-    content = models.TextField(blank=True)
+    dj_name = models.CharField(max_length=255, blank=True, verbose_name="DJ Name")
+    bio = models.TextField(blank=True, verbose_name="About Me")
     image = models.ImageField(
-        upload_to='images/', default='../default_profile_bp5fwp'
+        upload_to='images/',
+        default='../default_profile_bp5fwp',
+        blank=True
     )
 
     class Meta:
@@ -25,3 +27,4 @@ def create_profile(sender, instance, created, **kwargs):
         Profile.objects.create(owner=instance)
 
 post_save.connect(create_profile, sender=User)
+
