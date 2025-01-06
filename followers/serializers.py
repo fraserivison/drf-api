@@ -1,24 +1,23 @@
-from django.db import IntegrityError
 from rest_framework import serializers
 from .models import Follower
 
 
 class FollowerSerializer(serializers.ModelSerializer):
     """
-    Serializer for the Follower model
-    Create method handles the unique constraint on 'owner' and 'followed'
+    Serializer to manage follower data and user relationships.
+    Adjusted to use read-only fields and handle duplicate follow attempts.
     """
     owner = serializers.ReadOnlyField(source='owner.username')
-    followed_name = serializers.ReadOnlyField(source='followed.username')
+    followed_username = serializers.ReadOnlyField(source='followed.username')
+    followed_profile_id = serializers.ReadOnlyField(source='followed.profile.id')
+    followed_profile_image = serializers.ReadOnlyField(source='followed.profile.image.url')
 
     class Meta:
         model = Follower
-        fields = [
-            'id', 'owner', 'created_at', 'followed', 'followed_name'
-        ]
+        fields = ['id', 'owner', 'created_at', 'followed', 'followed_username', 'followed_profile_id', 'followed_profile_image']
 
     def create(self, validated_data):
         try:
             return super().create(validated_data)
         except IntegrityError:
-            raise serializers.ValidationError({'detail': 'possible duplicate'})
+            raise serializers.ValidationError({'detail': 'This user is already followed.'})
