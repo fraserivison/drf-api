@@ -27,6 +27,7 @@ pytz==2024.2
 requests==2.32.3
 requests-oauthlib==2.0.0
 rest-framework-simplejwt==0.0.2
+setuptools>=52
 six==1.17.0
 sqlparse==0.5.3
 urllib3==2.3.0
