@@ -9,15 +9,15 @@ class TrackSerializer(serializers.ModelSerializer):
     ratings_count = serializers.ReadOnlyField(source='ratings_count_annotation')
 
     def validate_audio_file(self, value):
-        if value.size > 10 * 1024 * 1024:  # 10MB limit
-            raise serializers.ValidationError('Audio file size larger than 10MB!')
+        if value.size > 100 * 1024 * 1024:  # Increased to 100MB limit
+            raise serializers.ValidationError('Audio file size larger than 100MB!')
         if not value.name.endswith(('.mp3', '.wav', '.flac')):
             raise serializers.ValidationError('Invalid audio file format!')
         return value
 
     def validate_album_cover(self, value):
-        if value.size > 2 * 1024 * 1024:  # 2MB limit
-            raise serializers.ValidationError('Image size larger than 2MB!')
+        if value.size > 5 * 1024 * 1024:  # 5MB limit for album cover
+            raise serializers.ValidationError('Image size larger than 5MB!')
         if value.image.height > 4096 or value.image.width > 4096:
             raise serializers.ValidationError('Image dimensions larger than 4096px!')
         return value
@@ -29,5 +29,3 @@ class TrackSerializer(serializers.ModelSerializer):
             'description', 'genre', 'audio_file', 'album_cover',
             'average_rating', 'ratings_count',
         ]
-
-
