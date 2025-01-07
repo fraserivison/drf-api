@@ -1,11 +1,7 @@
 from django.db import models
-from django.contrib.auth.models import User
 from profiles.models import Profile
 
 class Track(models.Model):
-    """
-    Track model for sharing music.
-    """
     GENRE_CHOICES = [
         ('house', 'House'),
         ('tech_house', 'Tech House'),
@@ -28,11 +24,11 @@ class Track(models.Model):
     audio_file = models.FileField(upload_to='audio_files/')
     album_cover = models.ImageField(
         upload_to='album_covers/',
-        default='../default_album_cover',
-        blank=True
+        default='../default_cover',
+        blank=True,
+        null=True
     )
     
-    # Ratings-related fields
     average_rating = models.DecimalField(max_digits=3, decimal_places=2, default=0.00)
     ratings_count = models.PositiveIntegerField(default=0)
 
@@ -51,6 +47,3 @@ class Track(models.Model):
             self.average_rating = 0.00
         self.ratings_count = total_ratings
         self.save()
-
-
-
