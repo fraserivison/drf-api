@@ -105,7 +105,6 @@ INSTALLED_APPS = [
 ]
 
 SITE_ID = 1
-
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'allauth.account.middleware.AccountMiddleware',
