@@ -58,10 +58,41 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 
 DEBUG = 'DEV' in os.environ
 
-ALLOWED_HOSTS = ['wave-drf-api-1157a4fa181b.herokuapp.com', 'localhost']
+ALLOWED_HOSTS = ['*', 'wave-app-c1bcdf0519e2.herokuapp.com', 'wave-drf-api-1157a4fa181b.herokuapp.com']
 
+# CSRF and CORS settings
+CSRF_TRUSTED_ORIGINS = [
+    "https://wave-app-c1bcdf0519e2.herokuapp.com",
+    "https://3000-fraserivison-waveapp-xp3woia850v.ws-eu117.gitpod.io",
+    "https://8000-fraserivison-drfapi-d10c7zwdb71.ws-eu117.gitpod.io",
+    "https://wave-drf-api-1157a4fa181b.herokuapp.com",
+]
 
-# Application definition
+CORS_ALLOWED_ORIGINS = [
+    "https://wave-app-c1bcdf0519e2.herokuapp.com",
+    "https://3000-fraserivison-waveapp-xp3woia850v.ws-eu117.gitpod.io",
+    "https://8000-fraserivison-drfapi-d10c7zwdb71.ws-eu117.gitpod.io",
+    "https://wave-drf-api-1157a4fa181b.herokuapp.com",
+]
+
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_ALL_ORIGINS = False
+
+# Allow OPTIONS requests
+CORS_ALLOW_METHODS = [
+    'GET',
+    'POST',
+    'PUT',
+    'PATCH',
+    'DELETE',
+    'OPTIONS',
+]
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -93,7 +124,6 @@ INSTALLED_APPS = [
 SITE_ID = 1
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
-    'allauth.account.middleware.AccountMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
