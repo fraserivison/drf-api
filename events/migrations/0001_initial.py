@@ -11,22 +11,24 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('tracks', '0001_initial'),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Rating',
+            name='Event',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('name', models.CharField(max_length=255)),
+                ('description', models.TextField(blank=True)),
+                ('genre', models.CharField(max_length=50)),
+                ('date', models.DateTimeField()),
+                ('location', models.CharField(max_length=255)),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('rating', models.IntegerField(choices=[(1, 1), (2, 2), (3, 3), (4, 4), (5, 5)])),
+                ('updated_at', models.DateTimeField(auto_now=True)),
                 ('owner', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
-                ('track', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='ratings', to='tracks.track')),
             ],
             options={
-                'ordering': ['-created_at'],
-                'unique_together': {('owner', 'track')},
+                'ordering': ['-date'],
             },
         ),
     ]

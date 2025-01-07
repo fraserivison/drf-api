@@ -15,12 +15,13 @@ class TrackList(generics.ListCreateAPIView):
         ratings_count_annotation=Count('ratings', distinct=True),
         average_rating_annotation=Avg('ratings__rating')
     ).order_by('-created_at')
+    
     filter_backends = [
         filters.OrderingFilter,
         filters.SearchFilter,
         DjangoFilterBackend,
     ]
-    filterset_fields = ['owner__profile', 'genre']
+    filterset_fields = ['owner', 'genre']  # Adjusted to directly filter by owner
     search_fields = ['owner__username', 'title', 'description', 'genre']
     ordering_fields = ['ratings_count_annotation', 'created_at']
 
@@ -37,5 +38,4 @@ class TrackDetail(generics.RetrieveUpdateDestroyAPIView):
         ratings_count_annotation=Count('ratings', distinct=True),
         average_rating_annotation=Avg('ratings__rating')
     ).order_by('-created_at')
-
 

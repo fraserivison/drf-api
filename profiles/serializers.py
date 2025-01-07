@@ -1,14 +1,16 @@
 from rest_framework import serializers
 from .models import Profile
+from followers.models import Follower
 from events.models import Event
+from events.serializers import EventSerializer
 
 class ProfileSerializer(serializers.ModelSerializer):
     owner = serializers.ReadOnlyField(source='owner.username')
     is_owner = serializers.SerializerMethodField()
     following_id = serializers.SerializerMethodField()
-    track_count = serializers.SerializerMethodField()
-    followers_count = serializers.SerializerMethodField()
-    following_count = serializers.SerializerMethodField()
+    track_count = serializers.ReadOnlyField()
+    followers_count = serializers.ReadOnlyField()
+    following_count = serializers.ReadOnlyField()
     events = serializers.SerializerMethodField()
 
     def get_is_owner(self, obj):
@@ -24,17 +26,7 @@ class ProfileSerializer(serializers.ModelSerializer):
             return following.id if following else None
         return None
 
-    def get_track_count(self, obj):
-        return obj.track_set.count()
-
-    def get_followers_count(self, obj):
-        return Follower.objects.filter(followed=obj.owner).count()
-
-    def get_following_count(self, obj):
-        return Follower.objects.filter(owner=obj.owner).count()
-
     def get_events(self, obj):
-        # Fetch events related to the profile's owner
         events = Event.objects.filter(owner=obj.owner)
         return EventSerializer(events, many=True).data
 
@@ -45,3 +37,4 @@ class ProfileSerializer(serializers.ModelSerializer):
             'bio', 'image', 'is_owner', 'following_id',
             'track_count', 'followers_count', 'following_count', 'events'
         ]
+

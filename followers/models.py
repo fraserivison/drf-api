@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-
 class Follower(models.Model):
     """
     Follower model for the relationship between users:
@@ -18,4 +17,5 @@ class Follower(models.Model):
 
     def __str__(self):
         return f'{self.owner} follows {self.followed}'
+
 

@@ -9,10 +9,11 @@ class ProfileList(generics.ListAPIView):
     List all profiles with track count, followers count, and following count.
     """
     queryset = Profile.objects.annotate(
-        track_count=Count('owner__track', distinct=True),
-        followers_count=Count('owner__followed', distinct=True),
-        following_count=Count('owner__following', distinct=True)
+        track_count=Count('tracks', distinct=True),  # Correct relationship to Track model
+        followers_count=Count('owner__followed', distinct=True),  # Correct reverse relationship
+        following_count=Count('owner__following', distinct=True)  # Correct reverse relationship
     ).order_by('-created_at')
+
     serializer_class = ProfileSerializer
 
     filter_backends = [
@@ -39,8 +40,11 @@ class ProfileDetail(generics.RetrieveUpdateAPIView):
     Retrieve or update a profile if you're the owner.
     """
     queryset = Profile.objects.annotate(
-        track_count=Count('owner__track', distinct=True),
-        followers_count=Count('owner__followed', distinct=True),
-        following_count=Count('owner__following', distinct=True)
+        track_count=Count('tracks', distinct=True),  # Correct relationship to Track model
+        followers_count=Count('owner__followed', distinct=True),  # Correct reverse relationship
+        following_count=Count('owner__following', distinct=True)  # Correct reverse relationship
     ).order_by('-created_at')
+
     serializer_class = ProfileSerializer
+
+

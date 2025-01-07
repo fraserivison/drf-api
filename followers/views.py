@@ -3,7 +3,6 @@ from .models import Follower
 from .serializers import FollowerSerializer
 from drf_api.permissions import IsOwnerOrReadOnly
 
-
 class FollowerList(generics.ListCreateAPIView):
     """
     View to list all followers and allow users to follow others.
@@ -24,4 +23,5 @@ class FollowerDetail(generics.RetrieveDestroyAPIView):
     permission_classes = [IsOwnerOrReadOnly]
     queryset = Follower.objects.all()
     serializer_class = FollowerSerializer
+
 
