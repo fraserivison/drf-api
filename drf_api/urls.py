@@ -12,15 +12,19 @@ urlpatterns = [
     path('dj-rest-auth/', include('dj_rest_auth.urls')),
     path('dj-rest-auth/registration/', include('dj_rest_auth.registration.urls')),
     path('auth/social/', include('allauth.socialaccount.urls')),
-    path('', include('profiles.urls')),
-    path('', include('tracks.urls')),
-    path('', include('comments.urls')),
-    path('', include('ratings.urls')),
-    path('', include('followers.urls')),
-    path('', include('events.urls')),
+    path('accounts/', include('allauth.urls')),
+    
+    # Include app-specific URLs
+    path('profiles/', include('profiles.urls')),
+    path('tracks/', include('tracks.urls')),
+    path('comments/', include('comments.urls')),
+    path('ratings/', include('ratings.urls')),
+    path('followers/', include('followers.urls')),
+    path('events/', include('events.urls')),
 ]
 
 # Serve media files in development
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
 
