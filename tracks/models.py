@@ -1,6 +1,11 @@
 from django.db import models
 from django.contrib.auth.models import User
 from profiles.models import Profile
+from django.core.files.storage import FileSystemStorage
+from django.conf import settings
+
+# Define local storage using the MEDIA_ROOT directory for local storage
+local_storage = FileSystemStorage(location=settings.MEDIA_ROOT)
 
 class Track(models.Model):
     """
@@ -25,10 +30,11 @@ class Track(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True)
     genre = models.CharField(max_length=50, choices=GENRE_CHOICES, default='other')
-    audio_file = models.FileField(upload_to='audio_files/')
+    audio_file = models.FileField(upload_to='audio_files/', storage=local_storage)
     album_cover = models.ImageField(
         upload_to='album_covers/',
-        default='../default_album_cover',
+        storage=local_storage,
+        default='../default_cover',
         blank=True
     )
     
@@ -51,4 +57,3 @@ class Track(models.Model):
             self.average_rating = 0.00
         self.ratings_count = total_ratings
         self.save()
-
