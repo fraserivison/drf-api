@@ -3,7 +3,7 @@ cloudinary==1.41.0
 dj-database-url==0.5.0
 dj-rest-auth==2.1.9
 Django==4.2
-django-allauth==0.44.0
+django-allauth==0.43.0
 django-cloudinary-storage==0.3.0
 django-cors-headers==4.6.0
 django-filter==24.3
@@ -18,5 +18,5 @@ python3-openid==3.2.0
 pytz==2024.2
 requests-oauthlib==2.0.0
 rest-framework-simplejwt==0.0.2
-setuptools>=75.0.0
+setuptools==75.7.0
 sqlparse==0.5.3
