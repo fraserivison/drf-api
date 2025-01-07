@@ -49,7 +49,7 @@ class Track(models.Model):
         return f'{self.id} {self.title}'
 
     def update_average_rating(self):
-        total_rating = sum(rating.value for rating in self.ratings.all())
+        total_rating = sum(rating.rating for rating in self.ratings.all())
         total_ratings = self.ratings.count()
         if total_ratings > 0:
             self.average_rating = total_rating / total_ratings
