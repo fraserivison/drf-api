@@ -1,131 +1,106 @@
-![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
+# Backend README for Social Media App
 
-Welcome fraserivison ,
+## Overview
 
-This is the Code Institute student template for Gitpod. We have preinstalled all of the tools you need to get started. It's perfectly ok to use this template as the basis for your project submissions.
+This project is a social media platform built for DJs to upload, share, and discover music. The backend is developed using Django and Django REST framework (DRF), and it provides an API for communication with the front end, allowing for various functionalities such as user authentication, music upload, track rating, event management, and user interaction features like following and commenting.
 
-You can safely delete this README.md file or change it for your own project. Please do read it at least once, though! It contains some important information about Gitpod and the extensions we use. Some of this information has been updated since the video content was created. The last update to this file was: **June 18, 2024**
-
-## Gitpod Reminders
-
-To run a frontend (HTML, CSS, Javascript only) application in Gitpod, in the terminal, type:
-
-`python3 -m http.server`
-
-A blue button should appear to click: _Make Public_,
-
-Another blue button should appear to click: _Open Browser_.
-
-To run a backend Python file, type `python3 app.py` if your Python file is named `app.py`, of course.
-
-A blue button should appear to click: _Make Public_,
-
-Another blue button should appear to click: _Open Browser_.
-
-By Default, Gitpod gives you superuser security privileges. Therefore, you do not need to use the `sudo` (superuser do) command in the bash terminal in any of the lessons.
-
-To log into the Heroku toolbelt CLI:
-
-1. Log in to your Heroku account and go to *Account Settings* in the menu under your avatar.
-2. Scroll down to the *API Key* and click *Reveal*
-3. Copy the key
-4. In Gitpod, from the terminal, run `heroku_config`
-5. Paste in your API key when asked
-
-You can now use the `heroku` CLI program - try running `heroku apps` to confirm it works. This API key is unique and private to you, so do not share it. If you accidentally make it public, you can create a new one with _Regenerate API Key_.
-
-### Connecting your Mongo database
-
-- **Connect to Mongo CLI on a IDE**
-- navigate to your MongoDB Clusters Sandbox
-- click **"Connect"** button
-- select **"Connect with the MongoDB shell"**
-- select **"I have the mongo shell installed"**
-- choose **mongosh (2.0 or later)** for : **"Select your mongo shell version"**
-- choose option: **"Run your connection string in your command line"**
-- in the terminal, paste the copied code `mongo "mongodb+srv://<CLUSTER-NAME>.mongodb.net/<DBname>" --apiVersion 1 --username <USERNAME>`
-  - replace all `<angle-bracket>` keys with your own data
-- enter password _(will not echo **\*\*\*\*** on screen)_
-
-------
-
-## Release History
-
-We continually tweak and adjust this template to help give you the best experience. Here is the version history:
-
-**June 18, 2024,** Add Mongo back into template
-
-**June 14, 2024,** Temporarily remove Mongo until the key issue is resolved
-
-**May 28 2024:** Fix Mongo and Links installs
-
-**April 26 2024:** Update node version to 16
-
-**September 20 2023:** Update Python version to 3.9.17.
-
-**September 1 2021:** Remove `PGHOSTADDR` environment variable.
-
-**July 19 2021:** Remove `font_fix` script now that the terminal font issue is fixed.
-
-**July 2 2021:** Remove extensions that are not available in Open VSX.
-
-**June 30 2021:** Combined the P4 and P5 templates into one file, added the uptime script. See the FAQ at the end of this file.
-
-**June 10 2021:** Added: `font_fix` script and alias to fix the Terminal font issue
-
-**May 10 2021:** Added `heroku_config` script to allow Heroku API key to be stored as an environment variable.
-
-**April 7 2021:** Upgraded the template for VS Code instead of Theia.
-
-**October 21 2020:** Versions of the HTMLHint, Prettier, Bootstrap4 CDN and Auto Close extensions updated. The Python extension needs to stay the same version for now.
-
-**October 08 2020:** Additional large Gitpod files (`core.mongo*` and `core.python*`) are now hidden in the Explorer, and have been added to the `.gitignore` by default.
-
-**September 22 2020:** Gitpod occasionally creates large `core.Microsoft` files. These are now hidden in the Explorer. A `.gitignore` file has been created to make sure these files will not be committed, along with other common files.
-
-**April 16 2020:** The template now automatically installs MySQL instead of relying on the Gitpod MySQL image. The message about a Python linter not being installed has been dealt with, and the set-up files are now hidden in the Gitpod file explorer.
-
-**April 13 2020:** Added the _Prettier_ code beautifier extension instead of the code formatter built-in to Gitpod.
-
-**February 2020:** The initialisation files now _do not_ auto-delete. They will remain in your project. You can safely ignore them. They just make sure that your workspace is configured correctly each time you open it. It will also prevent the Gitpod configuration popup from appearing.
-
-**December 2019:** Added Eventyret's Bootstrap 4 extension. Type `!bscdn` in a HTML file to add the Bootstrap boilerplate. Check out the <a href="https://github.com/Eventyret/vscode-bcdn" target="_blank">README.md file at the official repo</a> for more options.
-
-------
-
-## FAQ about the uptime script
-
-**Why have you added this script?**
-
-It will help us to calculate how many running workspaces there are at any one time, which greatly helps us with cost and capacity planning. It will help us decide on the future direction of our cloud-based IDE strategy.
-
-**How will this affect me?**
-
-For everyday usage of Gitpod, it doesn’t have any effect at all. The script only captures the following data:
-
-- An ID that is randomly generated each time the workspace is started.
-- The current date and time
-- The workspace status of “started” or “running”, which is sent every 5 minutes.
-
-It is not possible for us or anyone else to trace the random ID back to an individual, and no personal data is being captured. It will not slow down the workspace or affect your work.
-
-**So….?**
-
-We want to tell you this so that we are being completely transparent about the data we collect and what we do with it.
-
-**Can I opt out?**
-
-Yes, you can. Since no personally identifiable information is being captured, we'd appreciate it if you let the script run; however if you are unhappy with the idea, simply run the following commands from the terminal window after creating the workspace, and this will remove the uptime script:
-
-```
-pkill uptime.sh
-rm .vscode/uptime.sh
-```
-
-**Anything more?**
-
-Yes! We'd strongly encourage you to look at the source code of the `uptime.sh` file so that you know what it's doing. As future software developers, it will be great practice to see how these shell scripts work.
+### Key Features of the Backend:
+- **User Authentication**: Using `django-allauth` for user login, registration, and token-based authentication (JWT).
+- **Music Upload and Sharing**: Users can upload tracks and have them displayed in their profile and the discovery feed.
+- **Track Rating**: Users can rate tracks on a 1-5 star scale, with average ratings displayed.
+- **Event Management**: Users can create and share events with details such as date, location, and genre.
+- **CRUD Operations**: For tracks, events, user profiles, and comments.
+- **Security**: User data is secured, and API keys and passwords are stored in environment variables.
 
 ---
 
-Happy coding!
+## App Structure
+
+### Models
+
+1. **Profile Model**: Stores user-specific information like bio, profile picture, and links to events and tracks.
+2. **Track Model**: Represents the music tracks uploaded by users, with metadata like genre, file, and ratings.
+3. **Event Model**: Stores event details such as date, time, and location, allowing users to promote their events.
+4. **Comment Model**: Allows users to comment on tracks, encouraging interaction.
+5. **Follow Model**: Tracks relationships between users for following and notifications.
+6. **Rating Model**: Links users and tracks, allowing users to rate tracks.
+
+### Key Functionalities
+
+#### **Authentication and User Management**
+- **User Registration and Login**: Using `django-allauth` and JWT for stateless authentication.
+- **Profile Management**: Users can create and edit their profiles, uploading images and providing personal details.
+- **Permissions**: Only authenticated users can perform certain actions like uploading tracks, commenting, and rating.
+
+#### **Music Upload and Sharing**
+- **Track Upload**: Users can upload tracks via a file input form. Uploaded tracks are stored and linked to the user's profile.
+- **Discovery Page**: Tracks are displayed on a discovery page, sorted by rating.
+- **Sharing**: Once uploaded, tracks are available for sharing and discovery by other users.
+
+#### **Track Rating**
+- **Rating System**: Users can rate tracks from 1 to 5 stars. The average rating is updated dynamically.
+- **Rating Logic**: The `Track` model calculates the average rating by aggregating individual ratings.
+
+#### **Event Management**
+- **Create Events**: Users can create events by providing details such as name, date, location, and genre.
+- **Event Sharing**: Events are shown on the user's profile and can be shared with others.
+- **Event Filters**: A future feature (currently in development) will allow searching for events based on filters like genre and location.
+
+#### **CRUD Operations**
+- **Tracks**: Users can create, read, update, and delete tracks.
+- **Events**: Users can manage their events.
+- **Profiles**: Users can edit their profiles.
+- **Comments**: Users can add and delete comments on tracks.
+
+---
+
+## API Endpoints
+
+### Authentication
+- **POST /auth/login/**: Login to the application and receive a JWT token.
+- **POST /auth/register/**: Register a new user.
+- **POST /auth/logout/**: Log out and invalidate the JWT token.
+
+### User Profile
+- **GET /profile/**: Retrieve the authenticated user's profile.
+- **PUT /profile/**: Update the authenticated user's profile.
+
+### Tracks
+- **GET /tracks/**: Retrieve all tracks.
+- **POST /tracks/**: Upload a new track.
+- **GET /tracks/{id}/**: Get details of a specific track.
+- **PUT /tracks/{id}/**: Update an existing track.
+- **DELETE /tracks/{id}/**: Delete a track.
+
+### Events
+- **GET /events/**: Retrieve all events.
+- **POST /events/**: Create a new event.
+- **GET /events/{id}/**: Get details of a specific event.
+- **PUT /events/{id}/**: Update an event.
+- **DELETE /events/{id}/**: Delete an event.
+
+### Ratings
+- **POST /ratings/**: Rate a track (requires track ID and rating).
+- **GET /ratings/{id}/**: Get the rating of a specific track.
+
+### Comments
+- **POST /comments/**: Add a comment on a track.
+- **DELETE /comments/{id}/**: Delete a comment.
+
+---
+
+## Testing
+
+The backend has been tested using Django's built-in test framework. Tests cover various functionalities, including:
+
+- **User Authentication**: Ensuring registration, login, and logout work correctly.
+- **Track Upload and Rating**: Verifying users can upload tracks and rate them.
+- **Event Creation and Management**: Testing the ability to create, edit, and delete events.
+- **CRUD Operations**: Ensuring tracks, profiles, and comments can be managed through API endpoints.
+- **Permissions**: Verifying that only authenticated users can access certain features (e.g., uploading tracks, commenting).
+
+Tests are located in the `tests` folder of each app. To run the tests:
+
+```bash
+python manage.py test
+
