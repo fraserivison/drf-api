@@ -5,8 +5,8 @@ class TrackSerializer(serializers.ModelSerializer):
     owner = serializers.ReadOnlyField(source='owner.username')
     profile_id = serializers.ReadOnlyField(source='owner.profile.id')
     profile_image = serializers.ReadOnlyField(source='owner.profile.image.url')
-    average_rating = serializers.ReadOnlyField()
-    ratings_count = serializers.ReadOnlyField()
+    average_rating = serializers.ReadOnlyField(source='average_rating_annotation')
+    ratings_count = serializers.ReadOnlyField(source='ratings_count_annotation')
 
     def validate_audio_file(self, value):
         if value.size > 10 * 1024 * 1024:  # 10MB limit
@@ -30,3 +30,4 @@ class TrackSerializer(serializers.ModelSerializer):
             'description', 'genre', 'audio_file', 'album_cover',
             'average_rating', 'ratings_count',
         ]
+
