@@ -1,5 +1,5 @@
 from django.db.models import Avg, Count
-from rest_framework import generics, permissions
+from rest_framework import generics, permissions, filters
 from django_filters.rest_framework import DjangoFilterBackend
 from drf_api.permissions import IsOwnerOrReadOnly
 from .models import Track
@@ -13,7 +13,7 @@ class TrackList(generics.ListCreateAPIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     queryset = Track.objects.annotate(
         ratings_count_annotation=Count('ratings', distinct=True),
-        average_rating_annotation=Avg('ratings__value')
+        average_rating_annotation=Avg('ratings__rating')
     ).order_by('-created_at')
     filter_backends = [
         filters.OrderingFilter,
@@ -35,7 +35,7 @@ class TrackDetail(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [IsOwnerOrReadOnly]
     queryset = Track.objects.annotate(
         ratings_count_annotation=Count('ratings', distinct=True),
-        average_rating_annotation=Avg('ratings__value')
+        average_rating_annotation=Avg('ratings__rating')
     ).order_by('-created_at')
 
 
