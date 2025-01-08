@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 import dj_database_url
 from pathlib import Path
 import os
+import re
 
 if os.path.exists('env.py'):
     import env
@@ -59,9 +60,8 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 DEBUG = True #'DEV' in os.environ
 
 ALLOWED_HOSTS = [
+    os.environ.get('ALLOWED_HOST'),
     '*',
-    'wave-app-c1bcdf0519e2.herokuapp.com',
-    'wave-drf-api-1157a4fa181b.herokuapp.com',
 ]
 
 # CSRF and CORS settings
@@ -79,12 +79,6 @@ CSRF_TRUSTED_ORIGINS = [
     #"https://wave-drf-api-1157a4fa181b.herokuapp.com",
 #]
 
-if 'CLIENT_ORIGIN' in os.environ:
-    CORS_ALLOWED_ORIGINS = [os.environ.get('CLIENT_ORIGIN')]
-else:
-    CORS_ALLOWED_ORIGIN_REGEXES = [
-        r"^https://.*\.gitpod\.io$",
-    ]
 CORS_ALLOW_CREDENTIALS = True
 #CORS_ALLOW_ALL_ORIGINS = False
 
@@ -149,9 +143,9 @@ if 'CLIENT_ORIGIN' in os.environ:
     CORS_ALLOWED_ORIGINS = [
         os.environ.get('CLIENT_ORIGIN')
     ]
-else:
+if 'CLIENT_ORIGIN_DEV' in os.environ:
     CORS_ALLOWED_ORIGIN_REGEXES = [
-        r"^https://.*\.gitpod\.io$",
+         r"^https:\/\/.*\.codeinstitute-ide\.net$",
     ]
 
 CORS_ALLOW_CREDENTIALS = True 
