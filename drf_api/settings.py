@@ -56,7 +56,7 @@ REST_AUTH_SERIALIZERS = {
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
-DEBUG = 'DEV' in os.environ
+DEBUG = True #'DEV' in os.environ
 
 ALLOWED_HOSTS = ['*', 'wave-app-c1bcdf0519e2.herokuapp.com', 'wave-drf-api-1157a4fa181b.herokuapp.com']
 
