@@ -28,6 +28,3 @@ def create_profile(sender, instance, created, **kwargs):
         Profile.objects.create(owner=instance)
 
 post_save.connect(create_profile, sender=User)
-
-
-

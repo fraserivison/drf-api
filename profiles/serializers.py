@@ -37,4 +37,3 @@ class ProfileSerializer(serializers.ModelSerializer):
             'bio', 'image', 'is_owner', 'following_id',
             'track_count', 'followers_count', 'following_count', 'events'
         ]
-

@@ -44,3 +44,4 @@ class TrackDetail(generics.RetrieveUpdateDestroyAPIView):
         ratings_count_annotation=Count('ratings', distinct=True),
         average_rating_annotation=Avg('ratings__rating')
     ).order_by('-created_at')
+
