@@ -131,6 +131,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
 if 'CLIENT_ORIGIN' in os.environ:
@@ -142,7 +143,7 @@ else:
         r"^https://.*\.gitpod\.io$",
     ]
 
-    CORS_ALLOW_CREDENTIALS = True 
+CORS_ALLOW_CREDENTIALS = True 
         
 ROOT_URLCONF = 'drf_api.urls'
 
@@ -179,7 +180,6 @@ else:
     DATABASES = {
         'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
     }
-    
 
 
 
