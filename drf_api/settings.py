@@ -121,6 +121,7 @@ INSTALLED_APPS = [
     'ratings',
     'tracks',
 ]
+
 SITE_ID = 1
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
