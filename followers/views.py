@@ -1,3 +1,4 @@
+from rest_framework.exceptions import NotFound, ValidationError
 from rest_framework import generics, permissions
 from .models import Follower
 from .serializers import FollowerSerializer
@@ -23,5 +24,11 @@ class FollowerDetail(generics.RetrieveDestroyAPIView):
     permission_classes = [IsOwnerOrReadOnly]
     queryset = Follower.objects.all()
     serializer_class = FollowerSerializer
+
+    def perform_destroy(self, instance):
+        # Check if the user is following the target user
+        if instance.owner != self.request.user:
+            raise ValidationError("You are not following this user.")
+        instance.delete()
 
 
