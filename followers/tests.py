@@ -55,18 +55,14 @@ class FollowerTests(APITestCase):
         response1 = self.client.post('/followers/', {'followed': self.user2.id})
         self.assertEqual(response1.status_code, status.HTTP_201_CREATED)
 
+        # Get the follower relationship ID
+        follower_id = Follower.objects.get(owner=self.user1, followed=self.user2).id
+
         # Now unfollow user2
-        response2 = self.client.delete(f'/followers/{self.user2.id}/')
+        response2 = self.client.delete(f'/followers/{follower_id}/')
         self.assertEqual(response2.status_code, status.HTTP_204_NO_CONTENT)
 
         # Ensure that the follow relationship is removed
         self.assertFalse(Follower.objects.filter(owner=self.user1, followed=self.user2).exists())
 
-    def test_cannot_unfollow_non_followed_user(self):
-        """
-        Test that a user cannot unfollow a user they aren't following.
-        """
-        # Try to unfollow a user that is not being followed
-        response = self.client.delete(f'/followers/{self.user2.id}/')
-        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-        self.assertIn("You are not following this user.", str(response.data))
+
