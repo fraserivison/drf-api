@@ -7,7 +7,7 @@ class ProfileList(generics.ListAPIView):
     """
     List all profiles with followers count, and following count.
     """
-    queryset = Profile.objects.all()  # No need to use Count annotation if signals handle it
+    queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
 
     filter_backends = [
@@ -32,5 +32,5 @@ class ProfileDetail(generics.RetrieveUpdateAPIView):
     """
     Retrieve or update a profile if you're the owner.
     """
-    queryset = Profile.objects.all()  # No need to use Count annotation if signals handle it
+    queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
