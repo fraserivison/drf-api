@@ -2,6 +2,7 @@ from django.db import models
 from profiles.models import Profile
 from django.core.files.storage import FileSystemStorage
 from django.conf import settings
+from django.db.models import Avg
 
 local_storage = FileSystemStorage(location=settings.MEDIA_ROOT)
 
@@ -41,3 +42,9 @@ class Track(models.Model):
     def __str__(self):
         return f'{self.id} {self.title}'
 
+    def update_average_rating(self):
+        # Update the average rating based on related ratings
+        avg_rating = self.ratings.aggregate(Avg('rating'))['rating__avg']
+        self.average_rating = avg_rating if avg_rating else 0
+        self.ratings_count = self.ratings.count()
+        self.save()

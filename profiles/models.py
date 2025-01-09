@@ -15,6 +15,7 @@ class Profile(models.Model):
         blank=True
     )
 
+    # ManyToMany relationship to tracks
     tracks = models.ManyToManyField('tracks.Track', related_name='profiles', blank=True)
 
     class Meta:
@@ -23,24 +24,13 @@ class Profile(models.Model):
     def __str__(self):
         return f"{self.owner}'s profile"
 
-    def track_count(self):
-        return self.tracks.count()
-
+# Signal to create Profile when User is created
 def create_profile(sender, instance, created, **kwargs):
     if created:
         Profile.objects.create(owner=instance)
 
 post_save.connect(create_profile, sender=User)
 
-# Signals to update track count
-@receiver(post_save, sender='tracks.Track')
-def update_track_count_on_create(sender, instance, created, **kwargs):
-    if created:
-        profile = instance.owner
-        profile.save()  # Save to trigger recalculation of related fields
 
-@receiver(post_delete, sender='tracks.Track')
-def update_track_count_on_delete(sender, instance, **kwargs):
-    profile = instance.owner
-    profile.save()  # Save to trigger recalculation of related fields
+
 

@@ -1,6 +1,6 @@
 from rest_framework import generics, permissions, filters
 from django_filters.rest_framework import DjangoFilterBackend
-from django.db.models import Count, Avg  # Import missing functions
+from django.db.models import Count, Avg
 from .models import Track
 from .serializers import TrackSerializer
 from profiles.models import Profile
