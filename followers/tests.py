@@ -2,6 +2,8 @@ from django.contrib.auth.models import User
 from rest_framework.test import APITestCase
 from rest_framework import status
 from .models import Follower
+from rest_framework.exceptions import ValidationError
+
 
 class FollowerTests(APITestCase):
     def setUp(self):
@@ -24,6 +26,9 @@ class FollowerTests(APITestCase):
         # Verify Follower object exists in the database
         self.assertTrue(Follower.objects.filter(owner=self.user1, followed=self.user2).exists())
 
+        from rest_framework.exceptions import ValidationError
+
+    
     def test_duplicate_follow(self):
         """
         Test that a user cannot follow the same user twice.
@@ -35,8 +40,9 @@ class FollowerTests(APITestCase):
         # Attempt to follow the same user again
         response2 = self.client.post('/followers/', {'followed': self.user2.id})
     
-        # Expect a 400 Bad Request due to the uniqueness constraint
+        # Check that the response is a 400 Bad Request due to duplicate follow
         self.assertEqual(response2.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertIn('This user is already followed.', str(response2.data))
 
-        # Ensure only one relationship exists (unique constraint)
+        # Ensure that the follow relationship only exists once in the database
         self.assertEqual(Follower.objects.filter(owner=self.user1, followed=self.user2).count(), 1)

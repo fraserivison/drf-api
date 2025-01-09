@@ -2,7 +2,6 @@ from rest_framework import serializers
 from .models import Follower
 from django.db.utils import IntegrityError
 
-
 class FollowerSerializer(serializers.ModelSerializer):
     """
     Serializer to manage follower data and user relationships.
@@ -18,7 +17,13 @@ class FollowerSerializer(serializers.ModelSerializer):
         fields = ['id', 'owner', 'created_at', 'followed', 'followed_username', 'followed_profile_id', 'followed_profile_image']
 
     def create(self, validated_data):
-        try:
-            return super().create(validated_data)
-        except IntegrityError:
+        owner = validated_data.get('owner')
+        followed = validated_data.get('followed')
+        
+        # Check if the follow relationship already exists
+        if Follower.objects.filter(owner=owner, followed=followed).exists():
             raise serializers.ValidationError({'detail': 'This user is already followed.'})
+
+        # If no existing relationship, create the new follow
+        return super().create(validated_data)
+
