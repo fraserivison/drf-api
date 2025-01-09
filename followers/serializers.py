@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import Follower
+from django.db.utils import IntegrityError
 
 
 class FollowerSerializer(serializers.ModelSerializer):

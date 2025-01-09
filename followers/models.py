@@ -5,7 +5,7 @@ class Follower(models.Model):
     """
     Follower model for the relationship between users:
     'owner' is the user who is following, 'followed' is the user being followed.
-    The 'unique_together' constraint prevents duplicate follow relationships.
+    The 'UniqueConstraint' ensures that duplicate follow relationships are not allowed.
     """
     owner = models.ForeignKey(User, related_name='following', on_delete=models.CASCADE)
     followed = models.ForeignKey(User, related_name='followed', on_delete=models.CASCADE)
@@ -13,9 +13,12 @@ class Follower(models.Model):
 
     class Meta:
         ordering = ['-created_at']
-        unique_together = ['owner', 'followed']
+        constraints = [
+            models.UniqueConstraint(fields=['owner', 'followed'], name='unique_follow')
+        ]
 
     def __str__(self):
         return f'{self.owner} follows {self.followed}'
+
 
 
