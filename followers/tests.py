@@ -66,3 +66,18 @@ class FollowerTests(APITestCase):
         self.assertFalse(Follower.objects.filter(owner=self.user1, followed=self.user2).exists())
 
 
+    def test_retrieve_follower_detail(self):
+        """
+        Test that a user can retrieve details of a specific follower relationship.
+        """
+        # Create a follow relationship
+        follow = Follower.objects.create(owner=self.user1, followed=self.user2)
+
+        # Perform GET request for the specific follower detail
+        response = self.client.get(f'/followers/{follow.id}/')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+        # Verify the response contains the correct follower details
+        self.assertEqual(response.data['owner'], self.user1.username)  # Updated to check the username
+        self.assertEqual(response.data['followed'], self.user2.id)
+
