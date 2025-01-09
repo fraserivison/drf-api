@@ -8,7 +8,7 @@ class ProfileSerializer(serializers.ModelSerializer):
     owner = serializers.ReadOnlyField(source='owner.username')
     is_owner = serializers.SerializerMethodField()
     following_id = serializers.SerializerMethodField()
-    track_count = serializers.ReadOnlyField()
+    track_count = serializers.SerializerMethodField()
     followers_count = serializers.ReadOnlyField()
     following_count = serializers.ReadOnlyField()
     events = serializers.SerializerMethodField()
@@ -26,6 +26,9 @@ class ProfileSerializer(serializers.ModelSerializer):
             return following.id if following else None
         return None
 
+    def get_track_count(self, obj):
+        return obj.tracks.count()
+
     def get_events(self, obj):
         events = Event.objects.filter(owner=obj.owner)
         return EventSerializer(events, many=True).data
@@ -37,3 +40,4 @@ class ProfileSerializer(serializers.ModelSerializer):
             'bio', 'image', 'is_owner', 'following_id',
             'track_count', 'followers_count', 'following_count', 'events'
         ]
+

@@ -1,6 +1,7 @@
 from django.db import models
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, post_delete
 from django.contrib.auth.models import User
+from django.dispatch import receiver
 
 class Profile(models.Model):
     owner = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -14,7 +15,6 @@ class Profile(models.Model):
         blank=True
     )
 
-    # Reference to the Track model in the 'tracks' app (if this is where it's defined)
     tracks = models.ManyToManyField('tracks.Track', related_name='profiles', blank=True)
 
     class Meta:
@@ -23,8 +23,24 @@ class Profile(models.Model):
     def __str__(self):
         return f"{self.owner}'s profile"
 
+    def track_count(self):
+        return self.tracks.count()
+
 def create_profile(sender, instance, created, **kwargs):
     if created:
         Profile.objects.create(owner=instance)
 
 post_save.connect(create_profile, sender=User)
+
+# Signals to update track count
+@receiver(post_save, sender='tracks.Track')
+def update_track_count_on_create(sender, instance, created, **kwargs):
+    if created:
+        profile = instance.owner
+        profile.save()  # Save to trigger recalculation of related fields
+
+@receiver(post_delete, sender='tracks.Track')
+def update_track_count_on_delete(sender, instance, **kwargs):
+    profile = instance.owner
+    profile.save()  # Save to trigger recalculation of related fields
+
