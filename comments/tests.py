@@ -49,7 +49,7 @@ class CommentTests(APITestCase):
         # Attempt to edit the comment (success case)
         response = self.client.put(
             f'/comments/{comment.id}/',
-            json.dumps({'content': 'Updated Comment'}),  # Use json.dumps for payload
+            json.dumps({'content': 'Updated Comment'}),
             content_type='application/json'
         )
         print(response.data)  # Debug: Log response data
@@ -65,7 +65,17 @@ class CommentTests(APITestCase):
         # Attempt to edit someone else's comment (failure case)
         response = self.client.put(
             f'/comments/{other_comment.id}/',
-            json.dumps({'content': 'Hacked Comment'}),  # Use json.dumps for payload
+            json.dumps({'content': 'Hacked Comment'}),
             content_type='application/json'
         )
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+    def test_delete_own_comment(self):
+        """
+        Test that a logged-in user can delete their own comment
+        """
+        # User tries to delete their own comment
+        response = self.client.delete(f'/comments/{self.comment.id}/')
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertFalse(Comment.objects.filter(id=self.comment.id).exists())
+
