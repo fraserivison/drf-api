@@ -22,4 +22,3 @@ class RatingDetail(generics.RetrieveDestroyAPIView):
     permission_classes = [IsOwnerOrReadOnly]
     serializer_class = RatingSerializer
     queryset = Rating.objects.all()
-

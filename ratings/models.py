@@ -7,10 +7,10 @@ from django.dispatch import receiver
 class Rating(models.Model):
     """
     Rating model for rating tracks.
-    'owner' is the user who is rating, 'track' is the track being rated.
+    'owner' is the user who is rating, 'title' is the track's title being rated.
     """
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
-    track = models.ForeignKey(Track, related_name='ratings', on_delete=models.CASCADE)
+    title = models.ForeignKey(Track, related_name='ratings', on_delete=models.CASCADE)  # Changed 'track' to 'title'
     created_at = models.DateTimeField(auto_now_add=True)
     rating = models.IntegerField(
         choices=[(i, i) for i in range(1, 6)],
@@ -18,21 +18,22 @@ class Rating(models.Model):
 
     class Meta:
         ordering = ['-created_at']
-        unique_together = ['owner', 'track']
+        unique_together = ['owner', 'title']  # Updated to use 'title' instead of 'track'
 
     def __str__(self):
-        return f'{self.owner} rated {self.track} {self.rating}'
+        return f'{self.owner} rated {self.title} {self.rating}'
 
 # Signal to update track's average rating and rating count after a new rating is created
 @receiver(post_save, sender=Rating)
 def update_track_average_rating(sender, instance, created, **kwargs):
-    track = instance.track
+    track = instance.title  # Updated to use 'title'
     track.update_average_rating()
 
 # Signal to update track's average rating and rating count after a rating is deleted
 @receiver(post_delete, sender=Rating)
 def update_track_average_rating_on_delete(sender, instance, **kwargs):
-    track = instance.track
+    track = instance.title  # Updated to use 'title'
     track.update_average_rating()
+
 
 

@@ -8,17 +8,18 @@ class RatingSerializer(serializers.ModelSerializer):
     The create method handles updating an existing rating if it already exists.
     """
     owner = serializers.ReadOnlyField(source='owner.username')
+    title_name = serializers.ReadOnlyField(source='title.name')  # Added title_name to show track title
 
     class Meta:
         model = Rating
-        fields = ['id', 'created_at', 'owner', 'track', 'rating']
+        fields = ['id', 'created_at', 'owner', 'title', 'title_name', 'rating']  # Added title_name to the fields
 
     def create(self, validated_data):
         # Check if the user has already rated the track
         user = validated_data.get('owner')
-        track = validated_data.get('track')
+        title = validated_data.get('title')  # Updated to use 'title'
 
-        existing_rating = Rating.objects.filter(owner=user, track=track).first()
+        existing_rating = Rating.objects.filter(owner=user, title=title).first()  # Updated to use 'title'
 
         if existing_rating:
             # If a rating already exists, update it instead of creating a new one
