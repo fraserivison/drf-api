@@ -2,11 +2,11 @@ from rest_framework import generics, filters
 from django_filters.rest_framework import DjangoFilterBackend
 from .models import Profile
 from .serializers import ProfileSerializer
-from drf_api.permissions import IsOwnerOrReadOnly  # Import your custom permission
+from drf_api.permissions import IsOwnerOrReadOnly
 
 class ProfileList(generics.ListAPIView):
     """
-    List all profiles with followers count, and following count.
+    List all profiles with followers count and following count.
     """
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
@@ -28,6 +28,9 @@ class ProfileList(generics.ListAPIView):
         'owner__followed__created_at',
     ]
 
+    # Apply permission only if necessary (if access should be restricted to logged-in users, etc.)
+    permission_classes = [IsOwnerOrReadOnly]
+
 
 class ProfileDetail(generics.RetrieveUpdateAPIView):
     """
@@ -35,5 +38,5 @@ class ProfileDetail(generics.RetrieveUpdateAPIView):
     """
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
-    permission_classes = [IsOwnerOrReadOnly]  # Apply the custom permission here
+    permission_classes = [IsOwnerOrReadOnly]
 
