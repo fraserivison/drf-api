@@ -2,6 +2,7 @@ from rest_framework import generics, filters
 from django_filters.rest_framework import DjangoFilterBackend
 from .models import Profile
 from .serializers import ProfileSerializer
+from drf_api.permissions import IsOwnerOrReadOnly  # Import your custom permission
 
 class ProfileList(generics.ListAPIView):
     """
@@ -34,3 +35,5 @@ class ProfileDetail(generics.RetrieveUpdateAPIView):
     """
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
+    permission_classes = [IsOwnerOrReadOnly]  # Apply the custom permission here
+
