@@ -68,3 +68,46 @@ class TrackTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertIn('audio_file', response.data)
         self.assertEqual(response.data['audio_file'], ['No file was submitted.'])
+
+    def test_create_track_invalid_audio_format(self):
+        """
+        Test that an invalid audio file format (e.g., .mp4) is rejected.
+        """
+        audio_file = SimpleUploadedFile("test_audio.mp4", b"file_content", content_type="video/mp4")
+        data = {
+            "title": "Test Track",
+            "description": "This is a test track.",
+            "genre": "house",
+            "audio_file": audio_file
+        }
+
+        response = self.client.post('/tracks/', data, format='multipart')
+    
+        # Ensure that the correct error message is returned
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertIn('audio_file', response.data)
+        self.assertEqual(response.data['audio_file'], ['Invalid audio file format!'])
+
+    def test_create_track_missing_optional_fields(self):
+        """
+        Test that a track can be created without optional fields (album_cover, description).
+        """
+        audio_file = SimpleUploadedFile("test_audio.mp3", b"file_content", content_type="audio/mpeg")
+        data = {
+            "title": "Test Track Without Optional Fields",
+            "genre": "house",
+            "audio_file": audio_file
+        }
+
+        response = self.client.post('/tracks/', data, format='multipart')
+
+        # Ensure the track is created successfully
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+        # Verify that the track was saved with default values for optional fields
+        track = Track.objects.first()
+        self.assertIsNone(track.description)  # Description should be None if not provided
+        self.assertEqual(track.album_cover, '../default_cover')  # Default value for album_cover
+
+ 
+

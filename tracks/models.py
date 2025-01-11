@@ -24,7 +24,7 @@ class Track(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     title = models.CharField(max_length=255)
-    description = models.TextField(blank=True)
+    description = models.TextField(blank=True, null=True)
     genre = models.CharField(max_length=50, choices=GENRE_CHOICES, default='other')
     audio_file = models.FileField(upload_to='audio_files/', storage=local_storage)
     album_cover = models.ImageField(
