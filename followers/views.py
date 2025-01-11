@@ -19,7 +19,7 @@ class FollowerList(generics.ListCreateAPIView):
         serializer.save(owner=self.request.user)
 
 
-class FollowerDetail(generics.RetrieveDestroyAPIView):  # Change here
+class FollowerDetail(generics.RetrieveDestroyAPIView):
     """
     View to retrieve details of a follower and allow unfollowing.
     """
@@ -28,19 +28,13 @@ class FollowerDetail(generics.RetrieveDestroyAPIView):  # Change here
     serializer_class = FollowerSerializer
 
     def perform_destroy(self, instance):
-        # Get the user trying to unfollow
         target_user = instance.followed
-
-        # Check if the current user is following the target user
         follow_instance = Follower.objects.filter(owner=self.request.user, followed=target_user).first()
 
         if not follow_instance:
-            raise ValidationError("You are not following this user.")  # Raise error if not following
-
-        # Delete the relationship
+            raise ValidationError("You are not following this user.")
         follow_instance.delete()
-
-        return Response(status=status.HTTP_204_NO_CONTENT)  # Return successful response
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 

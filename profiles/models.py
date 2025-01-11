@@ -15,7 +15,6 @@ class Profile(models.Model):
         blank=True
     )
 
-    # ManyToMany relationship to tracks
     tracks = models.ManyToManyField('tracks.Track', related_name='profiles', blank=True)
 
     class Meta:
@@ -24,7 +23,6 @@ class Profile(models.Model):
     def __str__(self):
         return f"{self.owner}'s profile"
 
-# Signal to create Profile when User is created
 def create_profile(sender, instance, created, **kwargs):
     if created:
         Profile.objects.create(owner=instance)

@@ -20,15 +20,10 @@ class FollowerSerializer(serializers.ModelSerializer):
         owner = validated_data.get('owner')
         followed = validated_data.get('followed')
         
-        # Prevent users from following themselves
         if owner == followed:
             raise serializers.ValidationError({'detail': 'You cannot follow yourself.'})
-        
-        # Check if the follow relationship already exists
         if Follower.objects.filter(owner=owner, followed=followed).exists():
             raise serializers.ValidationError({'detail': 'This user is already followed.'})
-
-        # If no existing relationship, create the new follow
         return super().create(validated_data)
 
 

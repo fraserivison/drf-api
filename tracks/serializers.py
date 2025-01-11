@@ -1,3 +1,4 @@
+# In tracks/serializers.py
 from rest_framework import serializers
 from .models import Track
 from profiles.serializers import ProfileSerializer
@@ -22,3 +23,6 @@ class TrackSerializer(serializers.ModelSerializer):
             'description', 'genre', 'audio_file', 'album_cover',
             'average_rating', 'ratings_count',
         ]
+        extra_kwargs = {
+            'audio_file': {'required': True},
+        }

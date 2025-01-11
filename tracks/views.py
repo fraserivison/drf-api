@@ -7,7 +7,7 @@ from profiles.models import Profile
 
 class TrackList(generics.ListCreateAPIView):
     serializer_class = TrackSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.IsAuthenticated]  # Only authenticated users can create
     queryset = Track.objects.annotate(
         ratings_count_annotation=Count('ratings', distinct=True),
         average_rating_annotation=Avg('ratings__rating')
@@ -27,9 +27,10 @@ class TrackList(generics.ListCreateAPIView):
         profile, created = Profile.objects.get_or_create(owner=user)
         serializer.save(owner=profile)
 
+
 class TrackDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = TrackSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]  # Keep as is: Only authenticated users can edit or delete tracks
     queryset = Track.objects.annotate(
         ratings_count_annotation=Count('ratings', distinct=True),
         average_rating_annotation=Avg('ratings__rating')

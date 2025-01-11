@@ -43,7 +43,6 @@ class Track(models.Model):
         return f'{self.id} {self.title}'
 
     def update_average_rating(self):
-        # Update the average rating based on related ratings
         avg_rating = self.ratings.aggregate(Avg('rating'))['rating__avg']
         self.average_rating = avg_rating if avg_rating else 0
         self.ratings_count = self.ratings.count()
