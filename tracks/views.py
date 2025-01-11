@@ -5,6 +5,7 @@ from .models import Track
 from .serializers import TrackSerializer
 from profiles.models import Profile
 
+
 class TrackList(generics.ListCreateAPIView):
     serializer_class = TrackSerializer
     permission_classes = [permissions.IsAuthenticated]  # Only authenticated users can create
@@ -30,9 +31,13 @@ class TrackList(generics.ListCreateAPIView):
 
 class TrackDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = TrackSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]  # Keep as is: Only authenticated users can edit or delete tracks
+    permission_classes = [permissions.IsAuthenticated]  # Ensure only authenticated users can delete
     queryset = Track.objects.annotate(
         ratings_count_annotation=Count('ratings', distinct=True),
         average_rating_annotation=Avg('ratings__rating')
     )
+    
+    def perform_destroy(self, instance):
+        # Handle any additional logic on track deletion if necessary
+        instance.delete()
 
