@@ -28,7 +28,6 @@ class ProfileList(generics.ListAPIView):
         'owner__followed__created_at',
     ]
 
-    # Apply permission only if necessary (if access should be restricted to logged-in users, etc.)
     permission_classes = [IsOwnerOrReadOnly]
 
 
