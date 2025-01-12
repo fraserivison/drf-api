@@ -1,10 +1,9 @@
-# In tracks/serializers.py
 from rest_framework import serializers
 from .models import Track
 from profiles.serializers import ProfileSerializer
 
 class TrackSerializer(serializers.ModelSerializer):
-    owner = serializers.ReadOnlyField(source='owner.username')
+    owner = serializers.ReadOnlyField(source='owner.dj_name')
     profile = ProfileSerializer(source='owner.profile', read_only=True)
     average_rating = serializers.ReadOnlyField(source='average_rating_annotation')
     ratings_count = serializers.ReadOnlyField(source='ratings_count_annotation')
