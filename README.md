@@ -1,13 +1,69 @@
+# Wave App API Backend
+
 ## Overview
 This API powers a web application for DJs, enabling them to create profiles, upload and share music tracks, and manage events. The application supports user authentication using JSON Web Tokens (JWT), ensuring secure access to user-specific data.
+
+## Technologies Used
+
+### Frameworks and Libraries:
+- **Django**: The web framework used to build the backend.
+- **Django REST Framework (DRF)**: A toolkit for building APIs in Django.
+- **PostgreSQL**: The relational database system used for data storage.
+- **JWT (JSON Web Token)**: For handling secure user authentication.
+- **Cloudinary**: Used for storing and managing media files such as music tracks and cover art.
+
+### Database:
+- **PostgreSQL** is used as the database system for this project, providing a robust and scalable relational database to store user data, tracks, ratings, and events. The database schema includes custom models for users, tracks, ratings, and events, ensuring a structured and organized data flow.
+
+## Installation Instructions
+
+1. Install the required dependencies: pip install -r requirements.txt
+2. If you are using PostgreSQL, ensure that you have created a database: createdb your_database_name
+3. Apply Migrations: python manage.py migrate
+4. If you're not using the default SQLite database, you'll need to configure your database connection settings. In your settings.py, ensure that the DATABASES configuration is set up with the correct credentials. You can also pass the database URL as an environment variable:
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'your_database_name',
+        'USER': 'your_database_user',
+        'PASSWORD': 'your_database_password',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    }
+}
+
+5. Create a Superuser: python manage.py createsuperuser
+6. Once you've completed the database setup, you can start the development server using: python manage.py runserver
+7. Make sure to configure the following environment variables for the project to run correctly
+- SECRET_KEY: Generate a Django secret key (can use Django Secret Key Generator) and add it as an environment variable.
+- DATABASE_URL: Provide the database URL for different environments (local, production).
+- CLOUDINARY_URL: Set to your Cloudinary URL for media storage (only if using Cloudinary for images/media).
+- DEBUG: In production, ensure that DEBUG is set to False to avoid exposing sensitive information.
+- ALLOWED_HOSTS: Add the domains or IP addresses that can access the API (e.g., ALLOWED_HOSTS = ['your-domain.com']).
+- CLIENT_ORIGIN: Specify the URL of the front-end application that will be making requests to this API (e.g., http://localhost:3000).
+- CLIENT_ORIGIN_DEV: For local development, specify the address of the local server used to preview and test the UI during front-end development (e.g., http://127.0.0.1:3000).
+- Ensure that your .env file is not tracked by git by adding it to .gitignore.
+
+
+### Prerequisites:
+- **Python 3.8+**: Ensure Python is installed on your system.
+- **PostgreSQL**: You need PostgreSQL set up locally or remotely to store data.
+- **pip**: Python package installer.
+
+### Clone the Repository:
+Clone the project repository to your local machine:
+
+git clone https://github.com/your-username/music-app-backend.git
+cd music-app-backend
+
+## Features
 
 Key features include:
 - **Profile Management**: Users can create, update, follow and view profiles.
 - **Track Uploading**: DJs can upload music tracks, view them, and edit their details.
 - **Event Management**: Users can advertise events, specifying date, time, and genre.
 - **Permissions**: Data access is restricted, ensuring users can only interact with their own data, such as their profile and tracks.
-
-This API is built using Django and Django REST Framework (DRF), providing a robust, scalable solution for managing user data and interactions.
 
 ---
 
