@@ -4,11 +4,12 @@ from django.db.models import Count, Avg
 from .models import Track
 from .serializers import TrackSerializer
 from profiles.models import Profile
+from drf_api.permissions import IsOwnerOrReadOnly
 
 
 class TrackList(generics.ListCreateAPIView):
     serializer_class = TrackSerializer
-    permission_classes = [permissions.IsAuthenticated]  # Only authenticated users can create
+    permission_classes = [permissions.IsAuthenticated]
     queryset = Track.objects.annotate(
         ratings_count_annotation=Count('ratings', distinct=True),
         average_rating_annotation=Avg('ratings__rating')
@@ -31,7 +32,7 @@ class TrackList(generics.ListCreateAPIView):
 
 class TrackDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = TrackSerializer
-    permission_classes = [permissions.IsAuthenticated]  # Ensure only authenticated users can delete
+    permission_classes = [permissions.IsAuthenticated, IsOwnerOrReadOnly]
     queryset = Track.objects.annotate(
         ratings_count_annotation=Count('ratings', distinct=True),
         average_rating_annotation=Avg('ratings__rating')
