@@ -1,5 +1,26 @@
 # Wave App API Backend
 
+## Table of Contents
+- [Overview](#overview)
+- [Technologies Used](#technologies-used)
+  - [Frameworks and Libraries](#frameworks-and-libraries)
+  - [Database](#database)
+- [Installation Instructions](#installation-instructions)
+- [Features](#features)
+- [API Endpoints](#api-endpoints)
+- [Database and Model Design](#database-and-model-design)
+- [CRUD Functionality](#crud-functionality)
+- [User Authentication and Authorisation](#user-authentication-and-authorisation)
+- [Testing](#testing)
+  - [Automated Testing](#automated-testing)
+  - [Manual Testing](#manual-testing)
+- [Deployment Instructions](#deployment-instructions)
+- [Security Considerations](#security-considerations)
+- [Git & GitHub Usage](#git-and-github-usage)
+- [Front-End Integration](#front-end-integration)
+
+[Back to top](#table-of-contents)
+
 ## Overview
 This API powers a web application for DJs, enabling them to create profiles, upload and share music tracks, and manage events. The application supports user authentication using JSON Web Tokens (JWT), ensuring secure access to user-specific data.
 
@@ -44,18 +65,6 @@ DATABASES = {
 - CLIENT_ORIGIN: Specify the URL of the front-end application that will be making requests to this API (e.g., http://localhost:3000).
 - CLIENT_ORIGIN_DEV: For local development, specify the address of the local server used to preview and test the UI during front-end development (e.g., http://127.0.0.1:3000).
 - Ensure that your .env file is not tracked by git by adding it to .gitignore.
-
-
-### Prerequisites:
-- **Python 3.8+**: Ensure Python is installed on your system.
-- **PostgreSQL**: You need PostgreSQL set up locally or remotely to store data.
-- **pip**: Python package installer.
-
-### Clone the Repository:
-Clone the project repository to your local machine:
-
-git clone https://github.com/your-username/music-app-backend.git
-cd music-app-backend
 
 ## Features
 
@@ -240,7 +249,7 @@ The database schema includes multiple models to represent the key entities of th
 
 ---
 
-## User Authentication and Authorization
+## User Authentication and Authorisation
 
 - **JWT Authentication**:
   - Users authenticate by sending their credentials (email and password) to the `/login` endpoint.
@@ -255,139 +264,14 @@ The database schema includes multiple models to represent the key entities of th
 
 ## Testing
 
-### Automated Testing**
+### Automated Testing
 
 By implementing a robust suite of automated tests, we ensure that the API maintains high reliability and functionality throughout the development process. These tests help detect issues early, reduce manual testing efforts, and support the deployment of a stable, well-functioning back-end.
 
 Automated testing is an essential part of the development process, ensuring that all the features and functionality of the application work as expected. Below is a breakdown of the automated tests implemented for the various apps in the project:
 
 #### **Testing Framework**
-We use **Django's built-in test framework**, which is based on Python's `unittest` module, to create the automated tests. The tests ensure that the back-end API, including the models, views, and permissions, work as expected.
-
-#### **Testing Coverage**
-
-##### **Profile App Tests**
-- **Test Profile Creation**:
-  - Test the creation of a new user profile to ensure the profile data is saved correctly.
-  - Validate the profile fields, including `dj_name`, `bio`, and `image`.
-  - Ensure the profile is correctly linked to the user who created it (via the `owner` field).
-  
-- **Test Profile Updates**:
-  - Ensure that the profile data can be updated after it has been created (e.g., changing `dj_name` or `bio`).
-  - Verify that only the profile owner can update their profile.
-
-- **Test Profile Deletion**:
-  - Ensure that the profile can be deleted, and the related user data is properly removed from the database.
-
-##### **Track App Tests**
-- **Test Track Upload**:
-  - Test uploading a new track by providing necessary fields like `title`, `artist`, and `file`.
-  - Ensure that the track is linked to the correct user (profile) and stored in the database.
-
-- **Test Track Updates**:
-  - Test that users can update track details such as `title`, `artist`, and the track file itself.
-  - Ensure that updates can only be made by the track owner.
-
-- **Test Track Deletion**:
-  - Ensure that users can delete their tracks and that the related track data is removed from the database.
-
-- **Test Track Rating**:
-  - Validate that track ratings can be updated and that the average rating is correctly calculated and displayed.
-  - Test that only authenticated users can submit ratings.
-
-##### **Event App Tests**
-- **Test Event Creation**:
-  - Test the creation of a new event with fields like `name`, `date`, `time`, `location`, and `genre`.
-  - Ensure that the event is linked to the user who created it (via the `owner` field).
-
-- **Test Event Updates**:
-  - Ensure users can update event details, including changing the event name, date, time, or location.
-
-- **Test Event Deletion**:
-  - Ensure that users can delete their events and that the event data is correctly removed from the database.
-
-##### **Authentication Tests**
-- **Test User Registration**:
-  - Test that new users can register by providing their `email`, `username`, and `password`.
-  - Validate that the user is correctly created in the database.
-
-- **Test User Login**:
-  - Test the login process by ensuring users can authenticate using their credentials (`username` and `password`).
-  - Ensure that the JWT token is generated and returned on successful authentication.
-
-- **Test Permissions**:
-  - Ensure that users can only access their own data (e.g., their profile and tracks).
-  - Test the behavior when attempting to access or modify resources owned by other users (should be denied with appropriate permissions).
-
-##### **Comments App Tests**
-- **Test Comment Creation**:
-  - Ensure users can create comments on tracks, with validation for required fields like the comment text.
-  - Ensure the comment is correctly linked to the track and the user (via the `track` and `user` fields).
-
-- **Test Comment Updates**:
-  - Test that users can update their comments, ensuring only the comment's creator can make changes.
-
-- **Test Comment Deletion**:
-  - Ensure that users can delete their comments, and the related comment data is removed from the database.
-
-##### **Ratings App Tests**
-- **Test Rating Creation**:
-  - Ensure users can create ratings for tracks, with validation for required fields like the rating value.
-  - Ensure that the rating is linked to the correct track and user.
-
-- **Test Rating Updates**:
-  - Test that users can update their ratings for a track and that the `average_rating` field is updated accordingly.
-
-- **Test Rating Deletion**:
-  - Ensure users can delete their ratings, and the track's rating is updated accordingly.
-
-##### **Followers App Tests**
-- **Test Follow User**:
-  - Test that a user can follow another user and that the `followers` field is correctly updated.
-  - Ensure that the follow action cannot be performed by the user on themselves.
-
-- **Test Unfollow User**:
-  - Ensure users can unfollow other users and that the `followers` field is updated accordingly.
-
-- **Test Follow Count**:
-  - Verify that the number of followers and following is correctly updated when users follow or unfollow each other.
-
-#### **Key Tests Written**
-- **Profile Creation on User Registration**: 
-  - When a user is created, a corresponding `Profile` object is automatically created for that user. 
-  - This test verifies that a `Profile` is created when a new `User` is registered, ensuring the one-to-one relationship between `User` and `Profile` works as expected.
-
-- **Track Creation and Ownership**:
-  - When a `Track` is created, it must be linked to a `Profile` (the owner).
-  - The test ensures that a newly created `Track` is associated with the correct `Profile` and that the `owner` field is populated correctly.
-
-- **Track Rating Updates**:
-  - The `Track` model includes logic for updating the average rating and rating count. 
-  - This test checks if the `average_rating` and `ratings_count` fields are updated correctly when a new rating is added.
-
-- **Track File Validation**:
-  - To ensure that only valid audio files (within a 100MB size limit) can be uploaded, tests are in place to validate the file size and format during track creation. 
-  - This test ensures that an error message is returned if the uploaded file exceeds the size limit or is in an unsupported format.
-
-- **Profile Serializer**:
-  - The `ProfileSerializer` was tested to ensure that it correctly returns the DJ's name and other details in the expected format when serializing profile data.
-
-- **API Endpoint Testing**:
-  - **Track List Endpoint**: Verifies that the `TrackList` API returns the correct list of tracks, with the correct filtering, search, and ordering functionality.
-  - **Track Detail Endpoint**: Tests the `TrackDetail` API to ensure that the detailed information for a track, including the owner's name (via the `Profile` model), is correctly returned.
-
-#### **Running the Tests**
-
-### 6. **Automated Testing**
-
-By implementing a robust suite of automated tests, we ensure that the API maintains high reliability and functionality throughout the development process. These tests help detect issues early, reduce manual testing efforts, and support the deployment of a stable, well-functioning back-end.
-
-Automated testing is an essential part of the development process, ensuring that all the features and functionality of the application work as expected. Below is a breakdown of the automated tests implemented for the various apps in the project:
-
-#### **Testing Framework**
-We use **Django's built-in test framework**, which is based on Python's `unittest` module, to create the automated tests. The tests ensure that the back-end API, including the models, views, and permissions, work as expected.
-
-#### **Testing Coverage**
+**Django's built-in test framework** was used, which is based on Python's `unittest` module, to create the automated tests. The tests ensure that the back-end API, including the models, views, and permissions, work as expected.
 
 ##### **Profile App Tests**
 - **Test Profile Creation**:
@@ -501,9 +385,7 @@ We use **Django's built-in test framework**, which is based on Python's `unittes
 
 #### **Running the Tests**
 
-To run the tests for this project, use the following command in the terminal:
-
-**python manage.py test**
+To run the tests for this project, use the following command in the terminal: **python manage.py test**
 
 ### Manual Testing
 
@@ -569,6 +451,7 @@ The site was deployed to Heroku. The steps to deploy are as follows:
 11. Scroll down to **Manual Deploy** and choose the **main** branch to deploy your app.
 
 Once the deployment process is complete, the app should be live on Heroku.
+
 ---
 
 ## Security Considerations
@@ -594,3 +477,5 @@ Once the deployment process is complete, the app should be live on Heroku.
 
 - **CORS**: Ensure that Cross-Origin Resource Sharing (CORS) is properly configured to allow the front-end app to interact with the API.
 
+
+[Back to top](#table-of-contents)
