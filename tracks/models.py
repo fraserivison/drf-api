@@ -1,5 +1,5 @@
 from django.db import models
-from profiles.models import Profile
+from django.contrib.auth.models import User
 from django.core.files.storage import FileSystemStorage
 from django.conf import settings
 from django.db.models import Avg
@@ -20,7 +20,7 @@ class Track(models.Model):
         ('other', 'Other'),
     ]
 
-    owner = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     title = models.CharField(max_length=255)
@@ -47,3 +47,4 @@ class Track(models.Model):
         self.average_rating = avg_rating if avg_rating else 0
         self.ratings_count = self.ratings.count()
         self.save()
+
