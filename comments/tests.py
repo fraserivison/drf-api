@@ -8,11 +8,10 @@ import json
 class CommentTests(APITestCase):
     def setUp(self):
         self.user = User.objects.create_user(username='testuser', password='testpass')
-        
         self.client.login(username='testuser', password='testpass')
 
         self.track = Track.objects.create(
-            owner=self.user.profile,
+            owner=self.user,
             title='Test Track',
             genre='house',
             audio_file='test_audio.mp3',
@@ -31,7 +30,6 @@ class CommentTests(APITestCase):
         response = self.client.post('/comments/', {'track': self.track.id, 'content': 'New comment'})
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
-
     def test_edit_own_comment(self):
         """
         Test that a logged-in user can edit their own comment
@@ -46,7 +44,6 @@ class CommentTests(APITestCase):
             json.dumps({'content': 'Updated Comment'}),
             content_type='application/json'
         )
-        print(response.data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data['content'], 'Updated Comment')
 

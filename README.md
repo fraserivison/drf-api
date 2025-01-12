@@ -415,6 +415,8 @@ In addition to the automated tests, manual testing is conducted to ensure the ap
   - Test the `POST /ratings/` to ensure users can rate tracks.
   - Test the `GET /ratings/{id}/` to verify that ratings are correctly linked to tracks.
   - Test the `PUT /ratings/{id}/` to ensure users can update their ratings (since deletion is not allowed).
+  - Test the `DELETE /ratings/{id}/` to ensure users can delete a rating.
+
 
 - **Followers Endpoints**:
   - Test the `POST /follow/` to ensure users can follow others.
