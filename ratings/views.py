@@ -15,10 +15,12 @@ class RatingList(generics.ListCreateAPIView):
         serializer.save(owner=self.request.user)
 
 
-class RatingDetail(generics.RetrieveDestroyAPIView):
+class RatingDetail(generics.RetrieveUpdateDestroyAPIView):
     """
-    Retrieve a rating or delete it by id if you own it.
+    Retrieve, update, or delete a rating by id if you own it.
     """
     permission_classes = [IsOwnerOrReadOnly]
     serializer_class = RatingSerializer
     queryset = Rating.objects.all()
+
+

@@ -5,16 +5,15 @@ from rest_framework import status
 from .models import Track
 from django.core.files.uploadedfile import SimpleUploadedFile
 
-
 class TrackTests(APITestCase):
     def setUp(self):
         self.user = User.objects.create_user(username='testuser', password='password123')
-        self.profile, created = Profile.objects.get_or_create(owner=self.user)
         self.client.login(username='testuser', password='password123')
 
+        # Now assign the user directly to the track owner field, not the profile
         audio_file = SimpleUploadedFile("test_audio.mp3", b"file_content", content_type="audio/mpeg")
         self.track = Track.objects.create(
-            owner=self.profile,
+            owner=self.user,  # Directly assign the user to the owner field
             title="Test Track",
             genre="house",
             audio_file=audio_file
@@ -44,7 +43,7 @@ class TrackTests(APITestCase):
         self.assertEqual(track.title, "Test Track")
         self.assertEqual(track.description, "This is a test track.")
         self.assertEqual(track.genre, "house")
-        self.assertEqual(track.owner, self.profile)
+        self.assertEqual(track.owner, self.user)  # Change to self.user instead of self.profile
 
     def test_create_track_unauthenticated(self):
         """
@@ -163,7 +162,6 @@ class TrackTests(APITestCase):
         }
 
         response = self.client.put(f'/tracks/{track.id}/', updated_data, format='multipart')
-        print(response.data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
         track.refresh_from_db()
