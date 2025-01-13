@@ -17,6 +17,9 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='comment',
             name='track',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='tracks.track'),
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                to='tracks.track'
+            ),
         ),
     ]

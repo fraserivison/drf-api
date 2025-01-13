@@ -39,6 +39,5 @@ class TrackDetail(generics.RetrieveUpdateDestroyAPIView):
     )
     
     def perform_destroy(self, instance):
-        # Handle any additional logic on track deletion if necessary
         instance.delete()
 

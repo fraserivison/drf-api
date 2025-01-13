@@ -10,10 +10,9 @@ class TrackTests(APITestCase):
         self.user = User.objects.create_user(username='testuser', password='password123')
         self.client.login(username='testuser', password='password123')
 
-        # Now assign the user directly to the track owner field, not the profile
         audio_file = SimpleUploadedFile("test_audio.mp3", b"file_content", content_type="audio/mpeg")
         self.track = Track.objects.create(
-            owner=self.user,  # Directly assign the user to the owner field
+            owner=self.user,
             title="Test Track",
             genre="house",
             audio_file=audio_file
@@ -23,7 +22,6 @@ class TrackTests(APITestCase):
         """
         Test that an authenticated user can create a track with valid data.
         """
-        # Ensure no tracks are present before the test
         Track.objects.all().delete()
 
         audio_file = SimpleUploadedFile("test_audio.mp3", b"file_content", content_type="audio/mpeg")
@@ -37,13 +35,12 @@ class TrackTests(APITestCase):
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
-        # Check that only one track was created
         self.assertEqual(Track.objects.count(), 1)
         track = Track.objects.first()
         self.assertEqual(track.title, "Test Track")
         self.assertEqual(track.description, "This is a test track.")
         self.assertEqual(track.genre, "house")
-        self.assertEqual(track.owner, self.user)  # Change to self.user instead of self.profile
+        self.assertEqual(track.owner, self.user)
 
     def test_create_track_unauthenticated(self):
         """
