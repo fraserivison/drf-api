@@ -67,15 +67,15 @@ ALLOWED_HOSTS = [
 
 # CSRF and CORS settings
 CSRF_TRUSTED_ORIGINS = [
-    "https://wave-app-c1bcdf0519e2.herokuapp.com",
-    "https://3000-fraserivison-waveapp-xp3woia850v.ws-eu117.gitpod.io",
+    "https://wave-app-b7b6d5495ba9.herokuapp.com",
+    "https://3000-fraserivison-waveapp-cpx8danaxy1.ws-eu117.gitpod.io",
     "https://8000-fraserivison-drfapi-d10c7zwdb71.ws-eu117.gitpod.io",
     "https://wave-drf-api-1157a4fa181b.herokuapp.com",
 ]
 
 
 CORS_ALLOWED_ORIGINS = [
-    "https://3000-fraserivison-waveapp-xp3woia850v.ws-eu117.gitpod.io",
+    "https://3000-fraserivison-waveapp-cpx8danaxy1.ws-eu117.gitpod.io",
     "http://localhost:3000",
 ]
 
