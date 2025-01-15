@@ -4,6 +4,7 @@ from followers.models import Follower
 from events.models import Event
 from events.serializers import EventSerializer
 
+
 class ProfileSerializer(serializers.ModelSerializer):
     owner = serializers.ReadOnlyField(source='owner.username')
     is_owner = serializers.SerializerMethodField()
@@ -11,6 +12,7 @@ class ProfileSerializer(serializers.ModelSerializer):
     followers_count = serializers.ReadOnlyField()
     following_count = serializers.ReadOnlyField()
     events = serializers.SerializerMethodField()
+    tracks = serializers.SerializerMethodField()
 
     def get_is_owner(self, obj):
         request = self.context['request']
@@ -29,10 +31,16 @@ class ProfileSerializer(serializers.ModelSerializer):
         events = Event.objects.filter(owner=obj.owner)
         return EventSerializer(events, many=True).data
 
+    def get_tracks(self, obj):
+        from tracks.serializers import TrackSerializer  # Avoid circular import
+        tracks = obj.tracks.all()  # Uses the `related_name="tracks"` from the Track model
+        return TrackSerializer(tracks, many=True).data
+
+
     class Meta:
         model = Profile
         fields = [
             'id', 'owner', 'created_at', 'updated_at', 'dj_name',
             'bio', 'image', 'is_owner', 'following_id', 'followers_count', 
-            'following_count', 'events'
+            'following_count', 'events', 'tracks'
         ]
