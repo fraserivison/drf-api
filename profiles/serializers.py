@@ -3,6 +3,7 @@ from .models import Profile
 from followers.models import Follower
 from events.models import Event
 from events.serializers import EventSerializer
+from tracks.models import Track
 
 
 class ProfileSerializer(serializers.ModelSerializer):
@@ -32,10 +33,9 @@ class ProfileSerializer(serializers.ModelSerializer):
         return EventSerializer(events, many=True).data
 
     def get_tracks(self, obj):
-        from tracks.serializers import TrackSerializer  # Avoid circular import
-        tracks = obj.tracks.all()  # Uses the `related_name="tracks"` from the Track model
+        from tracks.serializers import TrackSerializer
+        tracks = Track.objects.filter(owner=obj.owner)
         return TrackSerializer(tracks, many=True).data
-
 
     class Meta:
         model = Profile

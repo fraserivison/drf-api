@@ -26,8 +26,8 @@ class TrackList(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
         user = self.request.user
-        profile, created = Profile.objects.get_or_create(owner=user)
-        serializer.save(owner=self.request.user)
+        profile, _ = Profile.objects.get_or_create(owner=user)
+        serializer.save(owner=user, profile=profile)  
 
 
 class TrackDetail(generics.RetrieveUpdateDestroyAPIView):
