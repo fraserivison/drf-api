@@ -81,6 +81,8 @@ CORS_ALLOWED_ORIGINS = [
     "https://wave-drf-api-1157a4fa181b.herokuapp.com",
 ]
 
+CORS_ALLOW_HEADERS = [ "Authorization", "Content-Type", ]
+
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOW_ALL_ORIGINS = True
 
