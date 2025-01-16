@@ -11,7 +11,7 @@ class Profile(models.Model):
     bio = models.TextField(blank=True, verbose_name="About Me")
     image = models.ImageField(
         upload_to='images/',
-        default='https://res.cloudinary.com/dmylma7bf/image/upload/v1735822416/default_profile_bp5fwp.jpg',
+        default='../default_profile_bp5fwp',
         blank=True
     )
 
