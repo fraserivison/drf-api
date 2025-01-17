@@ -32,15 +32,18 @@ REST_FRAMEWORK = {
         if 'DEV' in os.environ
         else 'dj_rest_auth.jwt_auth.JWTCookieAuthentication'
     )],
-    'DEFAULT_PAGINATION_CLASS':
-        'rest_framework.pagination.PageNumberPagination',
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10,
     'DATETIME_FORMAT': '%d %b %Y',
 }
+
+# Check if it's not in development (i.e., in production)
 if 'DEV' not in os.environ:
     REST_FRAMEWORK['DEFAULT_RENDERER_CLASSES'] = [
-        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.JSONRenderer',  # JSON rendering for non-browser clients
+        'rest_framework.renderers.BrowsableAPIRenderer',  # HTML rendering for the browsable API
     ]
+
 
 REST_USE_JWT = True
 JWT_AUTH_SECURE = False
