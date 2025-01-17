@@ -78,7 +78,7 @@ CSRF_TRUSTED_ORIGINS = [
 CORS_ALLOWED_ORIGINS = [
     "https://3000-fraserivison-waveapp-f3at7xflsi4.ws-eu117.gitpod.io",
     "http://localhost:3000",
-    "https://wave-drf-api-1157a4fa181b.herokuapp.com",
+    #"https://wave-drf-api-1157a4fa181b.herokuapp.com",
 ]
 
 #CORS_ALLOW_HEADERS = [ "Authorization", "Content-Type", ]
