@@ -12,7 +12,7 @@ class TrackTests(APITestCase):
 
         audio_file = SimpleUploadedFile("test_audio.mp3", b"file_content", content_type="audio/mpeg")
         self.track = Track.objects.create(
-            owner=self.user,
+            username=self.user,
             title="Test Track",
             genre="house",
             audio_file=audio_file
@@ -40,7 +40,7 @@ class TrackTests(APITestCase):
         self.assertEqual(track.title, "Test Track")
         self.assertEqual(track.description, "This is a test track.")
         self.assertEqual(track.genre, "house")
-        self.assertEqual(track.owner, self.user)
+        self.assertEqual(track.username, self.user)
 
     def test_create_track_unauthenticated(self):
         """

@@ -4,7 +4,7 @@ from django.db.models import Count, Avg
 from .models import Track
 from .serializers import TrackSerializer
 from profiles.models import Profile
-from drf_api.permissions import IsOwnerOrReadOnly
+from drf_api.permissions import IsusernameOrReadOnly
 
 
 class TrackList(generics.ListCreateAPIView):
@@ -20,19 +20,19 @@ class TrackList(generics.ListCreateAPIView):
         filters.SearchFilter,
         DjangoFilterBackend,
     ]
-    filterset_fields = ['owner', 'genre']
-    search_fields = ['owner__username', 'title', 'description', 'genre']
+    filterset_fields = ['username', 'genre']
+    search_fields = ['username__username', 'title', 'description', 'genre']
     ordering_fields = ['ratings_count_annotation', 'created_at']
 
     def perform_create(self, serializer):
         user = self.request.user
-        profile, _ = Profile.objects.get_or_create(owner=user)
-        serializer.save(owner=user, profile=profile)  
+        profile, _ = Profile.objects.get_or_create(username=user)
+        serializer.save(username=user, profile=profile)  
 
 
 class TrackDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = TrackSerializer
-    permission_classes = [permissions.IsAuthenticated, IsOwnerOrReadOnly]
+    permission_classes = [permissions.IsAuthenticated, IsusernameOrReadOnly]
     queryset = Track.objects.annotate(
         ratings_count_annotation=Count('ratings', distinct=True),
         average_rating_annotation=Avg('ratings__rating')

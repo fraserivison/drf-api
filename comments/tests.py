@@ -15,14 +15,14 @@ class CommentTests(APITestCase):
         self.client.login(username='testuser', password='testpass')
 
         self.track = Track.objects.create(
-            owner=self.user,
+            username=self.user,
             title='Test Track',
             genre='house',
             audio_file='test_audio.mp3',
         )
 
         self.comment = Comment.objects.create(
-            owner=self.user,
+            username=self.user,
             track=self.track,
             content="This is a test comment."
         )
@@ -43,7 +43,7 @@ class CommentTests(APITestCase):
         and cannot edit someone else's comment.
         """
         comment = Comment.objects.create(
-            owner=self.user,
+            username=self.user,
             track=self.track,
             content="Original Comment"
         )
@@ -61,7 +61,7 @@ class CommentTests(APITestCase):
             password='testpass'
         )
         other_comment = Comment.objects.create(
-            owner=new_user,
+            username=new_user,
             track=self.track,
             content="Other User Comment"
         )

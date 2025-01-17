@@ -9,7 +9,7 @@ class RatingTests(APITestCase):
         self.user = User.objects.create_user(username='testuser', password='password123')
         
         self.track = Track.objects.create(
-            owner=self.user,
+            username=self.user,
             title='Test Track',
             description='A test track description.',
             genre='house',

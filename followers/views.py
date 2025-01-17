@@ -2,7 +2,7 @@ from rest_framework.exceptions import ValidationError
 from rest_framework import generics, permissions
 from .models import Follower
 from .serializers import FollowerSerializer
-from drf_api.permissions import IsOwnerOrReadOnly
+from drf_api.permissions import IsusernameOrReadOnly
 from rest_framework.response import Response
 from rest_framework import status
 
@@ -16,20 +16,20 @@ class FollowerList(generics.ListCreateAPIView):
     serializer_class = FollowerSerializer
 
     def perform_create(self, serializer):
-        serializer.save(owner=self.request.user)
+        serializer.save(username=self.request.user)
 
 
 class FollowerDetail(generics.RetrieveDestroyAPIView):
     """
     View to retrieve details of a follower and allow unfollowing.
     """
-    permission_classes = [IsOwnerOrReadOnly]
+    permission_classes = [IsusernameOrReadOnly]
     queryset = Follower.objects.all()
     serializer_class = FollowerSerializer
 
     def perform_destroy(self, instance):
         target_user = instance.followed
-        follow_instance = Follower.objects.filter(owner=self.request.user, followed=target_user).first()
+        follow_instance = Follower.objects.filter(username=self.request.user, followed=target_user).first()
 
         if not follow_instance:
             raise ValidationError("You are not following this user.")

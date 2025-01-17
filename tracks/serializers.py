@@ -2,7 +2,7 @@ from rest_framework import serializers
 from .models import Track
 
 class TrackSerializer(serializers.ModelSerializer):
-    owner = serializers.ReadOnlyField(source='owner.username')
+    username = serializers.ReadOnlyField(source='username.username')
     average_rating = serializers.ReadOnlyField(source='average_rating_annotation')
     ratings_count = serializers.ReadOnlyField(source='ratings_count_annotation')
 
@@ -16,7 +16,7 @@ class TrackSerializer(serializers.ModelSerializer):
     class Meta:
         model = Track
         fields = [
-            'id', 'owner', 'created_at', 'updated_at', 'title', 
+            'id', 'username', 'created_at', 'updated_at', 'title', 
             'description', 'genre', 'audio_file', 'album_cover',
             'average_rating', 'ratings_count',
         ]

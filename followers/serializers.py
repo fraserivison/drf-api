@@ -7,22 +7,22 @@ class FollowerSerializer(serializers.ModelSerializer):
     Serializer to manage follower data and user relationships.
     Adjusted to use read-only fields and handle duplicate follow attempts.
     """
-    owner = serializers.ReadOnlyField(source='owner.username')
+    username = serializers.ReadOnlyField(source='username.username')
     followed_username = serializers.ReadOnlyField(source='followed.username')
     followed_profile_id = serializers.ReadOnlyField(source='followed.profile.id')
     followed_profile_image = serializers.ReadOnlyField(source='followed.profile.image.url')
 
     class Meta:
         model = Follower
-        fields = ['id', 'owner', 'created_at', 'followed', 'followed_username', 'followed_profile_id', 'followed_profile_image']
+        fields = ['id', 'username', 'created_at', 'followed', 'followed_username', 'followed_profile_id', 'followed_profile_image']
 
     def create(self, validated_data):
-        owner = validated_data.get('owner')
+        username = validated_data.get('username')
         followed = validated_data.get('followed')
         
-        if owner == followed:
+        if username == followed:
             raise serializers.ValidationError({'detail': 'You cannot follow yourself.'})
-        if Follower.objects.filter(owner=owner, followed=followed).exists():
+        if Follower.objects.filter(username=username, followed=followed).exists():
             raise serializers.ValidationError({'detail': 'This user is already followed.'})
         return super().create(validated_data)
 

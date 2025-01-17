@@ -10,7 +10,7 @@ class EventTests(APITestCase):
         self.client.login(username='testuser', password='testpass')
 
         self.event = Event.objects.create(
-            owner=self.user,
+            username=self.user,
             name='Original Event',
             description='Original description.',
             genre='house',
@@ -31,7 +31,7 @@ class EventTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
         event = Event.objects.get(id=response.data['id'])
-        self.assertEqual(event.owner.username, 'testuser')
+        self.assertEqual(event.username.username, 'testuser')
 
     def test_edit_event(self):
         updated_data = {

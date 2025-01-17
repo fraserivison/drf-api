@@ -5,11 +5,11 @@ class RatingSerializer(serializers.ModelSerializer):
     """
     Simplified Serializer for the Rating model.
     """
-    owner = serializers.ReadOnlyField(source='owner.username')
+    username = serializers.ReadOnlyField(source='username.username')
 
     class Meta:
         model = Rating
-        fields = ['id', 'created_at', 'owner', 'title', 'rating']
+        fields = ['id', 'created_at', 'username', 'title', 'rating']
 
     def create(self, validated_data):
         """
@@ -17,7 +17,7 @@ class RatingSerializer(serializers.ModelSerializer):
         If a rating exists, return it; otherwise, create a new one.
         """
         rating, created = Rating.objects.update_or_create(
-            owner=validated_data['owner'],
+            username=validated_data['username'],
             title=validated_data['title'],
             defaults={'rating': validated_data['rating']}
         )

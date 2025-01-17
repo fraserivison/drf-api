@@ -1,6 +1,6 @@
 from rest_framework import generics, permissions
 from django_filters.rest_framework import DjangoFilterBackend
-from drf_api.permissions import IsOwnerOrReadOnly
+from drf_api.permissions import IsusernameOrReadOnly
 from .models import Comment
 from .serializers import CommentSerializer, CommentDetailSerializer
 
@@ -16,13 +16,13 @@ class CommentList(generics.ListCreateAPIView):
     filterset_fields = ['track']
 
     def perform_create(self, serializer):
-        serializer.save(owner=self.request.user)
+        serializer.save(username=self.request.user)
 
 
 class CommentDetail(generics.RetrieveUpdateDestroyAPIView):
     """
     Retrieve a comment, or update or delete it by id if you own it.
     """
-    permission_classes = [IsOwnerOrReadOnly]
+    permission_classes = [IsusernameOrReadOnly]
     serializer_class = CommentDetailSerializer
     queryset = Comment.objects.all()
