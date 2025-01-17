@@ -63,43 +63,57 @@ DEBUG = 'DEV' in os.environ
 ALLOWED_HOSTS = [
     os.environ.get('ALLOWED_HOST'),
     'localhost',
-    '8000-fraserivison-drfapi-d10c7zwdb71.ws-eu117.gitpod.io',
+    #'8000-fraserivison-drfapi-d10c7zwdb71.ws-eu117.gitpod.io',
 ]
 
 # CSRF and CORS settings
-CSRF_TRUSTED_ORIGINS = [
-    "https://wave-app-b7b6d5495ba9.herokuapp.com",
-    "https://3000-fraserivison-waveapp-f3at7xflsi4.ws-eu117.gitpod.io",
-    "https://8000-fraserivison-drfapi-d10c7zwdb71.ws-eu117.gitpod.io",
-    "https://wave-drf-api-1157a4fa181b.herokuapp.com",
-]
-
-
-CORS_ALLOWED_ORIGINS = [
-    "https://3000-fraserivison-waveapp-f3at7xflsi4.ws-eu117.gitpod.io",
-    "http://localhost:3000",
+#CSRF_TRUSTED_ORIGINS = [
+    #"https://wave-app-b7b6d5495ba9.herokuapp.com",
+    #"https://3000-fraserivison-waveapp-f3at7xflsi4.ws-eu117.gitpod.io",
+    #"https://8000-fraserivison-drfapi-d10c7zwdb71.ws-eu117.gitpod.io",
     #"https://wave-drf-api-1157a4fa181b.herokuapp.com",
-]
+#]
+
+
+#CORS_ALLOWED_ORIGINS = [
+    #"https://3000-fraserivison-waveapp-f3at7xflsi4.ws-eu117.gitpod.io",
+    #"http://localhost:3000",
+    #"https://wave-drf-api-1157a4fa181b.herokuapp.com",
+#]
 
 #CORS_ALLOW_HEADERS = [ "Authorization", "Content-Type", ]
 
-CORS_ALLOW_CREDENTIALS = True
-CORS_ALLOW_ALL_ORIGINS = False
+#CORS_ALLOW_ALL_ORIGINS = True
 
 # Allow OPTIONS requests
-CORS_ALLOW_METHODS = [
-    'GET',
-    'POST',
-    'PUT',
-    'PATCH',
-    'DELETE',
-    'OPTIONS',
-]
+#CORS_ALLOW_METHODS = [
+    #'GET',
+    #'POST',
+    #'PUT',
+    #'PATCH',
+    #'DELETE',
+    #'OPTIONS',
+#]
 
-AUTHENTICATION_BACKENDS = (
-    'django.contrib.auth.backends.ModelBackend',
-    'allauth.account.auth_backends.AuthenticationBackend',
-)
+#AUTHENTICATION_BACKENDS = (
+    #'django.contrib.auth.backends.ModelBackend',
+    #'allauth.account.auth_backends.AuthenticationBackend',
+#)
+
+if 'CLIENT_ORIGIN' in os.environ:
+    CORS_ALLOWED_ORIGINS = [
+        os.environ.get('CLIENT_ORIGIN')
+    ]
+
+if 'CLIENT_ORIGIN_DEV' in os.environ:
+    extracted_url = re.match(
+        r'^.+-', os.environ.get('CLIENT_ORIGIN_DEV', ''), re.IGNORECASE
+    ).group(0)
+    CORS_ALLOWED_ORIGIN_REGEXES = [
+        rf"{extracted_url}(eu|us)\d+\w\.gitpod\.io$",
+    ]
+
+CORS_ALLOW_CREDENTIALS = True
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -129,16 +143,7 @@ INSTALLED_APPS = [
     'ratings',
     'tracks',
 ]
-
 SITE_ID = 1
-
-ACCOUNT_EMAIL_REQUIRED = False
-ACCOUNT_EMAIL_VERIFICATION = 'none'
-ACCOUNT_owner_REQUIRED = True
-ACCOUNT_AUTHENTICATION_METHOD = 'owner'
-
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
@@ -149,26 +154,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-
-if 'CLIENT_ORIGIN' in os.environ:
-    CORS_ALLOWED_ORIGINS = [
-        os.environ.get('CLIENT_ORIGIN')
-    ]
-# if 'CLIENT_ORIGIN_DEV' in os.environ:
-#     CORS_ALLOWED_ORIGIN_REGEXES = [
-#          r"^https:\/\/.*\.codeinstitute-ide\.net$",
-#     ]
-
-# UPDATED CLIENT_ORIGIN_DEV
-if 'CLIENT_ORIGIN_DEV' in os.environ:
-    extracted_url = re.match(
-        r'^.+-', os.environ.get('CLIENT_ORIGIN_DEV', ''), re.IGNORECASE
-    ).group(0)
-    CORS_ALLOWED_ORIGIN_REGEXES = [
-        rf"{extracted_url}(eu|us)\d+\w\.gitpod\.io$",
-    ]
-
-CORS_ALLOW_CREDENTIALS = True 
         
 ROOT_URLCONF = 'drf_api.urls'
 
@@ -190,6 +175,12 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'drf_api.wsgi.application'
 
+ACCOUNT_EMAIL_REQUIRED = False
+ACCOUNT_EMAIL_VERIFICATION = 'none'
+ACCOUNT_owner_REQUIRED = True
+ACCOUNT_AUTHENTICATION_METHOD = 'owner'
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
