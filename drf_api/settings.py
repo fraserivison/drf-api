@@ -64,6 +64,7 @@ ALLOWED_HOSTS = [
     os.environ.get('ALLOWED_HOST'),
     'localhost',
     '8000-fraserivison-drfapi-d10c7zwdb71.ws-eu117.gitpod.io',
+    'wave-drf-api-1157a4fa181b.herokuapp.com',
 ]
 
 # CSRF and CORS settings
