@@ -86,14 +86,14 @@ ALLOWED_HOSTS = [
 #CORS_ALLOW_ALL_ORIGINS = True
 
 # Allow OPTIONS requests
-#CORS_ALLOW_METHODS = [
-    #'GET',
-    #'POST',
-    #'PUT',
-    #'PATCH',
-    #'DELETE',
-    #'OPTIONS',
-#]
+CORS_ALLOW_METHODS = [
+    'GET',
+    'POST',
+    'PUT',
+    'PATCH',
+    'DELETE',
+    'OPTIONS',
+]
 
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
