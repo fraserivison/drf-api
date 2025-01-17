@@ -95,10 +95,10 @@ ALLOWED_HOSTS = [
     #'OPTIONS',
 #]
 
-#AUTHENTICATION_BACKENDS = (
-    #'django.contrib.auth.backends.ModelBackend',
-    #'allauth.account.auth_backends.AuthenticationBackend',
-#)
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
 
 if 'CLIENT_ORIGIN' in os.environ:
     CORS_ALLOWED_ORIGINS = [
