@@ -1317,7 +1317,7 @@ File /workspace/drf-api/followers/migrations/0001_initial.py first seen with mti
 File /workspace/.pip-modules/lib/python3.11/site-packages/allauth/account/migrations/0001_initial.py first seen with mtime 1601720715.0
 File /workspace/drf-api/ratings/migrations/0001_initial.py first seen with mtime 1736246927.1783128
 File /workspace/drf-api/tracks/migrations/__init__.py first seen with mtime 1735981493.1403265
-File /workspace/.pip-modules/lib/python3.11/site-packages/django/contrib/auth/migrations/0004_alter_user_username_opts.py first seen with mtime 1735998638.1419072
+File /workspace/.pip-modules/lib/python3.11/site-packages/django/contrib/auth/migrations/0004_alter_user_owner_opts.py first seen with mtime 1735998638.1419072
 File /workspace/.pip-modules/lib/python3.11/site-packages/django/contrib/admin/migrations/__init__.py first seen with mtime 1735998637.9499075
 File /workspace/drf-api/profiles/migrations/0001_initial.py first seen with mtime 1736246927.1743126
 File /workspace/.pip-modules/lib/python3.11/site-packages/django/contrib/contenttypes/migrations/0002_remove_content_type_name.py first seen with mtime 1735998638.1939073
@@ -1348,7 +1348,7 @@ File /workspace/.pip-modules/lib/python3.11/site-packages/django/db/migrations/r
 File /workspace/.pip-modules/lib/python3.11/site-packages/django/db/migrations/loader.py first seen with mtime 1735998638.6539068
 File /workspace/.pip-modules/lib/python3.11/site-packages/cffi/api.py first seen with mtime 1735991938.4195354
 File /workspace/.pip-modules/lib/python3.11/site-packages/rest_framework/authtoken/migrations/__init__.py first seen with mtime 1735998709.6578472
-File /workspace/.pip-modules/lib/python3.11/site-packages/django/contrib/auth/migrations/0008_alter_user_username_max_length.py first seen with mtime 1735998638.1459074
+File /workspace/.pip-modules/lib/python3.11/site-packages/django/contrib/auth/migrations/0008_alter_user_owner_max_length.py first seen with mtime 1735998638.1459074
 File /workspace/drf-api/comments/migrations/0001_initial.py first seen with mtime 1736246927.1743126
 File /workspace/drf-api/followers/migrations/__init__.py first seen with mtime 1735986530.2440846
 File /workspace/.pip-modules/lib/python3.11/site-packages/allauth/account/migrations/__init__.py first seen with mtime 1571643861.0
@@ -2734,12 +2734,12 @@ File /workspace/.pip-modules/lib/python3.11/site-packages/corsheaders/signals.py
 File /workspace/.pip-modules/lib/python3.11/site-packages/django/contrib/auth/migrations/0002_alter_permission_name_max_length.py first seen with mtime 1735998638.1419072
 File /workspace/.pip-modules/lib/python3.11/site-packages/rest_framework/authtoken/migrations/0001_initial.py first seen with mtime 1735998709.6578472
 File /workspace/.pip-modules/lib/python3.11/site-packages/django/contrib/auth/migrations/0012_alter_user_first_name_max_length.py first seen with mtime 1735998638.1459074
-File /workspace/.pip-modules/lib/python3.11/site-packages/django/contrib/auth/migrations/0004_alter_user_username_opts.py first seen with mtime 1735998638.1419072
+File /workspace/.pip-modules/lib/python3.11/site-packages/django/contrib/auth/migrations/0004_alter_user_owner_opts.py first seen with mtime 1735998638.1419072
 File /workspace/.pip-modules/lib/python3.11/site-packages/allauth/account/migrations/0001_initial.py first seen with mtime 1601720715.0
 File /workspace/.pip-modules/lib/python3.11/site-packages/django/contrib/auth/migrations/0007_alter_validators_add_error_messages.py first seen with mtime 1735998638.1459074
 File /workspace/.pip-modules/lib/python3.11/site-packages/django/contrib/admin/migrations/0002_logentry_remove_auto_add.py first seen with mtime 1735998637.9459074
 File /workspace/.pip-modules/lib/python3.11/site-packages/django/contrib/auth/migrations/0010_alter_group_name_max_length.py first seen with mtime 1735998638.1459074
-File /workspace/.pip-modules/lib/python3.11/site-packages/django/contrib/auth/migrations/0008_alter_user_username_max_length.py first seen with mtime 1735998638.1459074
+File /workspace/.pip-modules/lib/python3.11/site-packages/django/contrib/auth/migrations/0008_alter_user_owner_max_length.py first seen with mtime 1735998638.1459074
 File /workspace/.pip-modules/lib/python3.11/site-packages/allauth/socialaccount/migrations/0002_token_max_lengths.py first seen with mtime 1601720715.0
 File /workspace/.pip-modules/lib/python3.11/site-packages/allauth/socialaccount/migrations/__init__.py first seen with mtime 1571643861.0
 File /workspace/.pip-modules/lib/python3.11/site-packages/cffi/api.py first seen with mtime 1735991938.4195354

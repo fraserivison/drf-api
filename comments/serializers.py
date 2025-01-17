@@ -8,16 +8,16 @@ class CommentSerializer(serializers.ModelSerializer):
     Serializer for the Comment model.
     Includes fields for the user's profile and formatted timestamps.
     """
-    username = serializers.ReadOnlyField(source='username.username')
-    is_username = serializers.SerializerMethodField()
-    profile_id = serializers.ReadOnlyField(source='username.profile.id')
-    profile_image = serializers.ReadOnlyField(source='username.profile.image.url')
+    owner = serializers.ReadOnlyField(source='owner.owner')
+    is_owner = serializers.SerializerMethodField()
+    profile_id = serializers.ReadOnlyField(source='owner.profile.id')
+    profile_image = serializers.ReadOnlyField(source='owner.profile.image.url')
     created_at = serializers.SerializerMethodField()
     updated_at = serializers.SerializerMethodField()
 
-    def get_is_username(self, obj):
+    def get_is_owner(self, obj):
         request = self.context['request']
-        return request.user == obj.username
+        return request.user == obj.owner
 
     def get_created_at(self, obj):
         return naturaltime(obj.created_at)
@@ -28,7 +28,7 @@ class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
         fields = [
-            'id', 'username', 'is_username', 'profile_id', 'profile_image',
+            'id', 'owner', 'is_owner', 'profile_id', 'profile_image',
             'track', 'created_at', 'updated_at', 'content'
         ]
 

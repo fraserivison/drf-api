@@ -21,7 +21,7 @@ class Track(models.Model):
         ('other', 'Other'),
     ]
 
-    username = models.ForeignKey(User, on_delete=models.CASCADE)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
     profile = models.ForeignKey(
         Profile, on_delete=models.CASCADE, related_name="user_tracks", null=True
     )  # Allow null temporarily

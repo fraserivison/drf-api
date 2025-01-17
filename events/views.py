@@ -1,7 +1,7 @@
 from rest_framework import generics, permissions
 from .models import Event
 from .serializers import EventSerializer
-from drf_api.permissions import IsusernameOrReadOnly
+from drf_api.permissions import IsownerOrReadOnly
 
 class EventList(generics.ListCreateAPIView):
     """
@@ -12,12 +12,12 @@ class EventList(generics.ListCreateAPIView):
     serializer_class = EventSerializer
 
     def perform_create(self, serializer):
-        serializer.save(username=self.request.user)
+        serializer.save(owner=self.request.user)
 
 class EventDetail(generics.RetrieveUpdateDestroyAPIView):
     """
-    Retrieve, update or delete an event if the user is the username.
+    Retrieve, update or delete an event if the user is the owner.
     """
-    permission_classes = [IsusernameOrReadOnly]
+    permission_classes = [IsownerOrReadOnly]
     queryset = Event.objects.all()
     serializer_class = EventSerializer

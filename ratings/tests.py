@@ -6,10 +6,10 @@ from tracks.models import Track
 
 class RatingTests(APITestCase):
     def setUp(self):
-        self.user = User.objects.create_user(username='testuser', password='password123')
+        self.user = User.objects.create_user(owner='testuser', password='password123')
         
         self.track = Track.objects.create(
-            username=self.user,
+            owner=self.user,
             title='Test Track',
             description='A test track description.',
             genre='house',

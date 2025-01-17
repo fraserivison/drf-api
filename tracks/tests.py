@@ -7,12 +7,12 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 
 class TrackTests(APITestCase):
     def setUp(self):
-        self.user = User.objects.create_user(username='testuser', password='password123')
-        self.client.login(username='testuser', password='password123')
+        self.user = User.objects.create_user(owner='testuser', password='password123')
+        self.client.login(owner='testuser', password='password123')
 
         audio_file = SimpleUploadedFile("test_audio.mp3", b"file_content", content_type="audio/mpeg")
         self.track = Track.objects.create(
-            username=self.user,
+            owner=self.user,
             title="Test Track",
             genre="house",
             audio_file=audio_file
@@ -40,7 +40,7 @@ class TrackTests(APITestCase):
         self.assertEqual(track.title, "Test Track")
         self.assertEqual(track.description, "This is a test track.")
         self.assertEqual(track.genre, "house")
-        self.assertEqual(track.username, self.user)
+        self.assertEqual(track.owner, self.user)
 
     def test_create_track_unauthenticated(self):
         """

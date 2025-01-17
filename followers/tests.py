@@ -6,9 +6,9 @@ from .models import Follower
 
 class FollowerTests(APITestCase):
     def setUp(self):
-        self.user1 = User.objects.create_user(username='user1', password='testpass')
-        self.user2 = User.objects.create_user(username='user2', password='testpass')
-        self.client.login(username='user1', password='testpass')
+        self.user1 = User.objects.create_user(owner='user1', password='testpass')
+        self.user2 = User.objects.create_user(owner='user2', password='testpass')
+        self.client.login(owner='user1', password='testpass')
         Follower.objects.all().delete()
 
     def test_follow_user(self):
@@ -17,7 +17,7 @@ class FollowerTests(APITestCase):
         """
         response = self.client.post('/followers/', {'followed': self.user2.id})
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertTrue(Follower.objects.filter(username=self.user1, followed=self.user2).exists())
+        self.assertTrue(Follower.objects.filter(owner=self.user1, followed=self.user2).exists())
 
     def test_duplicate_follow(self):
         """
@@ -30,7 +30,7 @@ class FollowerTests(APITestCase):
         self.assertEqual(response2.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertIn('This user is already followed.', str(response2.data))
 
-        self.assertEqual(Follower.objects.filter(username=self.user1, followed=self.user2).count(), 1)
+        self.assertEqual(Follower.objects.filter(owner=self.user1, followed=self.user2).count(), 1)
 
     def test_unfollow_user(self):
         """
@@ -39,23 +39,23 @@ class FollowerTests(APITestCase):
         response1 = self.client.post('/followers/', {'followed': self.user2.id})
         self.assertEqual(response1.status_code, status.HTTP_201_CREATED)
 
-        follower_id = Follower.objects.get(username=self.user1, followed=self.user2).id
+        follower_id = Follower.objects.get(owner=self.user1, followed=self.user2).id
 
         response2 = self.client.delete(f'/followers/{follower_id}/')
         self.assertEqual(response2.status_code, status.HTTP_204_NO_CONTENT)
 
-        self.assertFalse(Follower.objects.filter(username=self.user1, followed=self.user2).exists())
+        self.assertFalse(Follower.objects.filter(owner=self.user1, followed=self.user2).exists())
 
     def test_retrieve_follower_detail(self):
         """
         Test that a user can retrieve details of a specific follower relationship.
         """
-        follow = Follower.objects.create(username=self.user1, followed=self.user2)
+        follow = Follower.objects.create(owner=self.user1, followed=self.user2)
 
         response = self.client.get(f'/followers/{follow.id}/')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-        self.assertEqual(response.data['username'], self.user1.username)
+        self.assertEqual(response.data['owner'], self.user1.owner)
         self.assertEqual(response.data['followed'], self.user2.id)
 
     def test_follow_self(self):
@@ -66,6 +66,6 @@ class FollowerTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertIn('You cannot follow yourself.', str(response.data))
 
-        self.assertFalse(Follower.objects.filter(username=self.user1, followed=self.user1).exists())
+        self.assertFalse(Follower.objects.filter(owner=self.user1, followed=self.user1).exists())
 
 

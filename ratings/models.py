@@ -7,9 +7,9 @@ from django.dispatch import receiver
 class Rating(models.Model):
     """
     Rating model for rating tracks.
-    'username' is the user who is rating, 'title' is the track's title being rated.
+    'owner' is the user who is rating, 'title' is the track's title being rated.
     """
-    username = models.ForeignKey(User, on_delete=models.CASCADE)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.ForeignKey(Track, related_name='ratings', on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     rating = models.IntegerField(
@@ -18,10 +18,10 @@ class Rating(models.Model):
 
     class Meta:
         ordering = ['-created_at']
-        unique_together = ['username', 'title']
+        unique_together = ['owner', 'title']
 
     def __str__(self):
-        return f'{self.username} rated {self.title} {self.rating}'
+        return f'{self.owner} rated {self.title} {self.rating}'
 
 @receiver(post_save, sender=Rating)
 def update_track_average_rating(sender, instance, created, **kwargs):

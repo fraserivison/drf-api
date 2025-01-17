@@ -81,17 +81,17 @@ The following is a comprehensive list of the available API endpoints in the appl
 
 ### `POST /register`
 - **Purpose**: Registers a new user in the application.
-- **Payload**: Includes user data like email, password, and username.
+- **Payload**: Includes user data like email, password, and owner.
 - **Response**: Returns a success message and HTTP status code 201.
 
 ### `POST /login`
 - **Purpose**: Authenticates the user and returns a JWT token for secure access to protected routes.
-- **Payload**: Includes username and password for login.
+- **Payload**: Includes owner and password for login.
 - **Response**: Returns an access token and HTTP status code 200.
 
 ### `GET /profiles/{id}/`
 - **Purpose**: Fetches a user's profile by their ID.
-- **Response**: Returns the profile information, including username, bio, image, and any associated tracks or events.
+- **Response**: Returns the profile information, including owner, bio, image, and any associated tracks or events.
 
 ### `POST /tracks/`
 - **Purpose**: Allows authenticated users to upload a new track.
@@ -143,11 +143,11 @@ The database schema includes multiple models to represent the key entities of th
 ### 1. **Profile Model**
    - **Purpose**: Stores information about each user’s profile.
    - **Fields**:
-     - `username`: ForeignKey to the User model (the user who owns this profile).
-     - `dj_name`: The DJ's stage name or username.
+     - `owner`: ForeignKey to the User model (the user who owns this profile).
+     - `dj_name`: The DJ's stage name or owner.
      - `bio`: A short biography or description of the DJ.
      - `image`: A profile picture for the DJ.
-   - **Relationships**: A one-to-one relationship with the User model (through `username`).
+   - **Relationships**: A one-to-one relationship with the User model (through `owner`).
    - **Logic**: Includes methods for retrieving user-specific profile details and updating the profile.
 
 ### 2. **Track Model**
@@ -156,9 +156,9 @@ The database schema includes multiple models to represent the key entities of th
      - `title`: The name of the track.
      - `artist`: The artist or DJ who created the track.
      - `file`: The audio file associated with the track.
-     - `username`: ForeignKey to the Profile model, linking the track to a specific user.
+     - `owner`: ForeignKey to the Profile model, linking the track to a specific user.
      - `rating`: An average rating for the track.
-   - **Relationships**: Each track is associated with one profile, and the track's data can be updated by the track's username.
+   - **Relationships**: Each track is associated with one profile, and the track's data can be updated by the track's owner.
 
 ### 3. **Event Model**
    - **Purpose**: Stores details about events hosted by users (e.g., DJ gigs, parties).
@@ -167,7 +167,7 @@ The database schema includes multiple models to represent the key entities of th
      - `date`: The date and time of the event.
      - `location`: The location where the event will take place.
      - `genre`: The genre of music that will be played.
-     - `username`: ForeignKey to the Profile model (the DJ hosting the event).
+     - `owner`: ForeignKey to the Profile model (the DJ hosting the event).
    - **Relationships**: Each event belongs to one user (Profile).
 
 ### 4. **Rating Model**
@@ -256,7 +256,7 @@ The database schema includes multiple models to represent the key entities of th
   - Upon successful authentication, the API returns a JWT, which users must send in the `Authorization` header for all protected routes.
   
 - **Permissions**:
-  - **IsusernameOrReadOnly**: Custom permission class that ensures users can only modify or delete their own data (e.g., profiles and tracks). Users cannot modify other users' profiles or tracks.
+  - **IsownerOrReadOnly**: Custom permission class that ensures users can only modify or delete their own data (e.g., profiles and tracks). Users cannot modify other users' profiles or tracks.
   - **Authentication**: The JWT token is required to access any endpoint that interacts with user-specific data (e.g., updating a profile or uploading a track).
   - **Read-only Permissions**: Some endpoints (e.g., viewing tracks and events) may be accessible to any authenticated user.
 
@@ -277,11 +277,11 @@ Automated testing is an essential part of the development process, ensuring that
 - **Test Profile Creation**:
   - Test the creation of a new user profile to ensure the profile data is saved correctly.
   - Validate the profile fields, including `dj_name`, `bio`, and `image`.
-  - Ensure the profile is correctly linked to the user who created it (via the `username` field).
+  - Ensure the profile is correctly linked to the user who created it (via the `owner` field).
   
 - **Test Profile Updates**:
   - Ensure that the profile data can be updated after it has been created (e.g., changing `dj_name` or `bio`).
-  - Verify that only the profile username can update their profile.
+  - Verify that only the profile owner can update their profile.
 
 - **Test Profile Deletion**:
   - Ensure that the profile can be deleted, and the related user data is properly removed from the database.
@@ -293,7 +293,7 @@ Automated testing is an essential part of the development process, ensuring that
 
 - **Test Track Updates**:
   - Test that users can update track details such as `title`, `artist`, and the track file itself.
-  - Ensure that updates can only be made by the track username.
+  - Ensure that updates can only be made by the track owner.
 
 - **Test Track Deletion**:
   - Ensure that users can delete their tracks and that the related track data is removed from the database.
@@ -305,7 +305,7 @@ Automated testing is an essential part of the development process, ensuring that
 ##### **Event App Tests**
 - **Test Event Creation**:
   - Test the creation of a new event with fields like `name`, `date`, `time`, `location`, and `genre`.
-  - Ensure that the event is linked to the user who created it (via the `username` field).
+  - Ensure that the event is linked to the user who created it (via the `owner` field).
 
 - **Test Event Updates**:
   - Ensure users can update event details, including changing the event name, date, time, or location.
@@ -315,7 +315,7 @@ Automated testing is an essential part of the development process, ensuring that
 
 ##### **Authentication Tests**
 - **Test User Registration**:
-  - Test that new users can register by providing their `email`, `username`, and `password`.
+  - Test that new users can register by providing their `email`, `owner`, and `password`.
   - Validate that the user is correctly created in the database.
 
 - **Test User Login**:
@@ -364,9 +364,9 @@ Automated testing is an essential part of the development process, ensuring that
   - When a user is created, a corresponding `Profile` object is automatically created for that user. 
   - This test verifies that a `Profile` is created when a new `User` is registered, ensuring the one-to-one relationship between `User` and `Profile` works as expected.
 
-- **Track Creation and usernameship**:
-  - When a `Track` is created, it must be linked to a `Profile` (the username).
-  - The test ensures that a newly created `Track` is associated with the correct `Profile` and that the `username` field is populated correctly.
+- **Track Creation and ownership**:
+  - When a `Track` is created, it must be linked to a `Profile` (the owner).
+  - The test ensures that a newly created `Track` is associated with the correct `Profile` and that the `owner` field is populated correctly.
 
 - **Track Rating Updates**:
   - The `Track` model includes logic for updating the average rating and rating count. 
@@ -381,7 +381,7 @@ Automated testing is an essential part of the development process, ensuring that
 
 - **API Endpoint Testing**:
   - **Track List Endpoint**: Verifies that the `TrackList` API returns the correct list of tracks, with the correct filtering, search, and ordering functionality.
-  - **Track Detail Endpoint**: Tests the `TrackDetail` API to ensure that the detailed information for a track, including the username's name (via the `Profile` model), is correctly returned.
+  - **Track Detail Endpoint**: Tests the `TrackDetail` API to ensure that the detailed information for a track, including the owner's name (via the `Profile` model), is correctly returned.
 
 #### **Running the Tests**
 
@@ -398,7 +398,7 @@ In addition to the automated tests, manual testing is conducted to ensure the ap
 - **Track Endpoints**:
   - Test the `POST /tracks/` with a valid track file and ensure the track is saved to the database.
   - Test the `PUT /tracks/{id}/` to update the track's metadata.
-  - Test the `DELETE /tracks/{id}/` to ensure only the track username can delete a track.
+  - Test the `DELETE /tracks/{id}/` to ensure only the track owner can delete a track.
 
 - **Event Endpoints**:
   - Test the `POST /events/` with valid event data.

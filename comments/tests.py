@@ -9,20 +9,20 @@ import json
 class CommentTests(APITestCase):
     def setUp(self):
         self.user = User.objects.create_user(
-            username='testuser',
+            owner='testuser',
             password='testpass'
         )
-        self.client.login(username='testuser', password='testpass')
+        self.client.login(owner='testuser', password='testpass')
 
         self.track = Track.objects.create(
-            username=self.user,
+            owner=self.user,
             title='Test Track',
             genre='house',
             audio_file='test_audio.mp3',
         )
 
         self.comment = Comment.objects.create(
-            username=self.user,
+            owner=self.user,
             track=self.track,
             content="This is a test comment."
         )
@@ -43,7 +43,7 @@ class CommentTests(APITestCase):
         and cannot edit someone else's comment.
         """
         comment = Comment.objects.create(
-            username=self.user,
+            owner=self.user,
             track=self.track,
             content="Original Comment"
         )
@@ -57,11 +57,11 @@ class CommentTests(APITestCase):
         self.assertEqual(response.data['content'], 'Updated Comment')
 
         new_user = User.objects.create_user(
-            username='otheruser',
+            owner='otheruser',
             password='testpass'
         )
         other_comment = Comment.objects.create(
-            username=new_user,
+            owner=new_user,
             track=self.track,
             content="Other User Comment"
         )

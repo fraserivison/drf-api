@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.dispatch import receiver
 
 class Profile(models.Model):
-    username = models.OneToOneField(User, on_delete=models.CASCADE)
+    owner = models.OneToOneField(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     dj_name = models.CharField(max_length=255, blank=True, verbose_name="DJ Name")
@@ -21,11 +21,11 @@ class Profile(models.Model):
         ordering = ['-created_at']
 
     def __str__(self):
-        return f"{self.username}'s profile"
+        return f"{self.owner}'s profile"
 
 def create_profile(sender, instance, created, **kwargs):
     if created:
-        Profile.objects.create(username=instance)
+        Profile.objects.create(owner=instance)
 
 post_save.connect(create_profile, sender=User)
 

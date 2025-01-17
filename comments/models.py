@@ -7,7 +7,7 @@ class Comment(models.Model):
     """
     Comment model, related to User and Track
     """
-    username = models.ForeignKey(User, on_delete=models.CASCADE)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
     track = models.ForeignKey(Track, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -17,4 +17,4 @@ class Comment(models.Model):
         ordering = ['-created_at']
 
     def __str__(self):
-        return f"Comment by {self.username} on {self.track}"
+        return f"Comment by {self.owner} on {self.track}"

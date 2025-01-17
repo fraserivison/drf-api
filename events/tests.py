@@ -6,11 +6,11 @@ from datetime import datetime, timedelta
 
 class EventTests(APITestCase):
     def setUp(self):
-        self.user = User.objects.create_user(username='testuser', password='testpass')
-        self.client.login(username='testuser', password='testpass')
+        self.user = User.objects.create_user(owner='testuser', password='testpass')
+        self.client.login(owner='testuser', password='testpass')
 
         self.event = Event.objects.create(
-            username=self.user,
+            owner=self.user,
             name='Original Event',
             description='Original description.',
             genre='house',
@@ -31,7 +31,7 @@ class EventTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
         event = Event.objects.get(id=response.data['id'])
-        self.assertEqual(event.username.username, 'testuser')
+        self.assertEqual(event.owner.owner, 'testuser')
 
     def test_edit_event(self):
         updated_data = {

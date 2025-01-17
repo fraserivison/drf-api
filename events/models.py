@@ -6,7 +6,7 @@ class Event(models.Model):
     Event model to allow users to advertise events.
     Includes details like name, date, location, genre, etc.
     """
-    username = models.ForeignKey(User, on_delete=models.CASCADE)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True)
     genre = models.CharField(max_length=50)

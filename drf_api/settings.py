@@ -68,15 +68,15 @@ ALLOWED_HOSTS = [
 
 # CSRF and CORS settings
 CSRF_TRUSTED_ORIGINS = [
-    #"https://wave-app-b7b6d5495ba9.herokuapp.com",
-    #"https://3000-fraserivison-waveapp-cpx8danaxy1.ws-eu117.gitpod.io",
+    "https://wave-app-b7b6d5495ba9.herokuapp.com",
+    "https://3000-fraserivison-waveapp-f3at7xflsi4.ws-eu117.gitpod.io",
     "https://8000-fraserivison-drfapi-d10c7zwdb71.ws-eu117.gitpod.io",
     "https://wave-drf-api-1157a4fa181b.herokuapp.com",
 ]
 
 
 CORS_ALLOWED_ORIGINS = [
-    #"https://3000-fraserivison-waveapp-cpx8danaxy1.ws-eu117.gitpod.io",
+    "https://3000-fraserivison-waveapp-f3at7xflsi4.ws-eu117.gitpod.io",
     "http://localhost:3000",
     "https://wave-drf-api-1157a4fa181b.herokuapp.com",
 ]
@@ -134,8 +134,8 @@ SITE_ID = 1
 
 ACCOUNT_EMAIL_REQUIRED = False
 ACCOUNT_EMAIL_VERIFICATION = 'none'
-ACCOUNT_USERNAME_REQUIRED = True
-ACCOUNT_AUTHENTICATION_METHOD = 'username'
+ACCOUNT_owner_REQUIRED = True
+ACCOUNT_AUTHENTICATION_METHOD = 'owner'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
@@ -193,6 +193,19 @@ WSGI_APPLICATION = 'drf_api.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
+
+
+#if 'DEV' in os.environ:
+    #DATABASES = {
+        #'default': {
+            #'ENGINE': 'django.db.backends.sqlite3',
+            #'NAME': BASE_DIR / 'db.sqlite3',
+        #}
+    #}
+#else:
+    #DATABASES = {
+        #'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
+    #}
 
 DATABASES = {
         'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
