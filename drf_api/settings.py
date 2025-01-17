@@ -63,7 +63,7 @@ DEBUG = 'DEV' in os.environ
 ALLOWED_HOSTS = [
     os.environ.get('ALLOWED_HOST'),
     'localhost',
-    #'8000-fraserivison-drfapi-d10c7zwdb71.ws-eu117.gitpod.io',
+    '8000-fraserivison-drfapi-d10c7zwdb71.ws-eu117.gitpod.io',
 ]
 
 # CSRF and CORS settings
