@@ -9,7 +9,7 @@ from drf_api.permissions import IsownerOrReadOnly
 
 class TrackList(generics.ListCreateAPIView):
     serializer_class = TrackSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     queryset = Track.objects.annotate(
         ratings_count_annotation=Count('ratings', distinct=True),
         average_rating_annotation=Avg('ratings__rating')
