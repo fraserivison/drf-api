@@ -7,7 +7,7 @@ from tracks.models import Track
 
 
 class ProfileSerializer(serializers.ModelSerializer):
-    owner = serializers.ReadOnlyField(source='owner.owner')
+    owner = serializers.ReadOnlyField(source='owner.username')
     is_owner = serializers.SerializerMethodField()
     following_id = serializers.SerializerMethodField()
     followers_count = serializers.ReadOnlyField()
