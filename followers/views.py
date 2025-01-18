@@ -32,7 +32,8 @@ class FollowerDetail(generics.RetrieveDestroyAPIView):
         follow_instance = Follower.objects.filter(owner=self.request.user, followed=target_user).first()
 
         if not follow_instance:
-            raise ValidationError("You are not following this user.")
+            return Response({"detail": "You are not following this user."}, status=status.HTTP_400_BAD_REQUEST)
+    
         follow_instance.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 

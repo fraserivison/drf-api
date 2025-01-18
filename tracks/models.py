@@ -24,13 +24,13 @@ class Track(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     profile = models.ForeignKey(
         Profile, on_delete=models.CASCADE, related_name="user_tracks", null=True
-    )  # Allow null temporarily
+    )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True, null=True)
     genre = models.CharField(max_length=50, choices=GENRE_CHOICES, default='other')
-    audio_file = models.FileField(upload_to='audio_files/', storage=local_storage)
+    audio_file = models.FileField(upload_to='audio_files/', storage=local_storage, blank=True, null=True)
     album_cover = models.ImageField(
         upload_to='album_covers/',
         storage=local_storage,

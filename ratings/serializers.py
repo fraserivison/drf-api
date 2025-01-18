@@ -5,7 +5,7 @@ class RatingSerializer(serializers.ModelSerializer):
     """
     Simplified Serializer for the Rating model.
     """
-    owner = serializers.ReadOnlyField(source='owner.owner')
+    owner = serializers.ReadOnlyField(source='owner.username')
 
     class Meta:
         model = Rating

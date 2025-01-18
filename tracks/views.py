@@ -21,7 +21,7 @@ class TrackList(generics.ListCreateAPIView):
         DjangoFilterBackend,
     ]
     filterset_fields = ['owner', 'genre']
-    search_fields = ['owner__owner', 'title', 'description', 'genre']
+    search_fields = ['owner__username', 'title', 'description', 'genre']
     ordering_fields = ['ratings_count_annotation', 'created_at']
 
     def perform_create(self, serializer):
@@ -37,7 +37,11 @@ class TrackDetail(generics.RetrieveUpdateDestroyAPIView):
         ratings_count_annotation=Count('ratings', distinct=True),
         average_rating_annotation=Avg('ratings__rating')
     )
-    
+
+    def perform_update(self, serializer):
+        serializer.save(owner=self.request.user, partial=True)
+
     def perform_destroy(self, instance):
         instance.delete()
+
 

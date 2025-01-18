@@ -7,8 +7,8 @@ class FollowerSerializer(serializers.ModelSerializer):
     Serializer to manage follower data and user relationships.
     Adjusted to use read-only fields and handle duplicate follow attempts.
     """
-    owner = serializers.ReadOnlyField(source='owner.owner')
-    followed_owner = serializers.ReadOnlyField(source='followed.owner')
+    owner = serializers.ReadOnlyField(source='owner.username')
+    followed_owner = serializers.ReadOnlyField(source='followed.profile.owner.username')
     followed_profile_id = serializers.ReadOnlyField(source='followed.profile.id')
     followed_profile_image = serializers.ReadOnlyField(source='followed.profile.image.url')
 
