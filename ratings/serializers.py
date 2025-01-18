@@ -6,12 +6,10 @@ class RatingSerializer(serializers.ModelSerializer):
     Simplified Serializer for the Rating model.
     """
     owner = serializers.ReadOnlyField(source='owner.username')
-    track_title = serializers.ReadOnlyField(source='title.title')  # Add this line to show the track title
-    track_id = serializers.ReadOnlyField(source='title.id')  # Reference the foreign key field name
 
     class Meta:
         model = Rating
-        fields = ['id', 'created_at', 'owner', 'track_id', 'track_title', 'rating']
+        fields = ['id', 'created_at', 'owner', 'title', 'rating']
 
     def create(self, validated_data):
         """
@@ -24,9 +22,3 @@ class RatingSerializer(serializers.ModelSerializer):
             defaults={'rating': validated_data['rating']}
         )
         return rating
-
-
-
-
-
-

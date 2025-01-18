@@ -3,8 +3,8 @@ from .models import Track
 
 class TrackSerializer(serializers.ModelSerializer):
     owner = serializers.ReadOnlyField(source='owner.username')
-    average_rating = serializers.ReadOnlyField(source='average_rating_annotation')
-    ratings_count = serializers.ReadOnlyField(source='ratings_count_annotation')
+    average_rating = serializers.ReadOnlyField()
+    ratings_count = serializers.ReadOnlyField()
 
     def validate_audio_file(self, value):
         if value is None:
@@ -29,4 +29,3 @@ class TrackSerializer(serializers.ModelSerializer):
             'description', 'genre', 'audio_file', 'album_cover',
             'average_rating', 'ratings_count',
         ]
-
