@@ -40,8 +40,8 @@ REST_FRAMEWORK = {
 # Check if it's not in development (i.e., in production)
 if 'DEV' not in os.environ:
     REST_FRAMEWORK['DEFAULT_RENDERER_CLASSES'] = [
-        'rest_framework.renderers.JSONRenderer',  # JSON rendering for non-browser clients
-        'rest_framework.renderers.BrowsableAPIRenderer',  # HTML rendering for the browsable API
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
     ]
 
 
