@@ -39,10 +39,11 @@ REST_FRAMEWORK = {
 
 # Check if it's not in development (i.e., in production)
 if 'DEV' not in os.environ:
-    REST_FRAMEWORK['DEFAULT_RENDERER_CLASSES'] = [
-        'rest_framework.renderers.JSONRenderer',
-        'rest_framework.renderers.BrowsableAPIRenderer',
-    ]
+    
+    #REST_FRAMEWORK['DEFAULT_RENDERER_CLASSES'] = [
+        #'rest_framework.renderers.JSONRenderer',
+        #'rest_framework.renderers.BrowsableAPIRenderer',
+    #]
 
 
 REST_USE_JWT = True
