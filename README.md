@@ -69,10 +69,12 @@ DATABASES = {
 ## Features
 
 Key features include:
-- **Profile Management**: Users can create, update, follow and view profiles.
 - **Track Uploading**: DJs can upload music tracks, view them, and edit their details.
 - **Event Management**: Users can advertise events, specifying date, time, and genre.
 - **Permissions**: Data access is restricted, ensuring users can only interact with their own data, such as their profile and tracks.
+
+- **Profile Management**: Users can create, update, follow and view profiles.
+
 
 ---
 
