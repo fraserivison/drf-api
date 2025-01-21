@@ -34,7 +34,7 @@ class Track(models.Model):
         blank=False,
         null=False
     )
-    audio_file = CloudinaryField('audio', resource_type='raw', blank=True, null=True)
+    audio_file = CloudinaryField('audio', resource_type='auto', blank=True, null=True)
     album_cover = models.ImageField(
         upload_to='album_covers/',
         default='../default_cover',
