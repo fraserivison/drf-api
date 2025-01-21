@@ -70,16 +70,17 @@ DATABASES = {
 
 Key features include:
 - **Track Uploading**: DJs can upload music tracks, view them, and edit their details.
+- **Music Sharing**: Users can listen to all music uploaded on the discovery page.
 - **Event Management**: Users can advertise events, specifying date, time, and genre.
+- **Search functionality**: Users can search for events and tracks.
+- **Rating**: Users can rate tracks which then displays an average.
 - **Permissions**: Data access is restricted, ensuring users can only interact with their own data, such as their profile and tracks.
-
-- **Profile Management**: Users can create, update, follow and view profiles.
-
+- **Profile Management**: Users can create and update their profile, which is synced up to the tracks and events they upload.
 
 ---
 
 ## API Endpoints
-The following is a comprehensive list of the available API endpoints in the application. These endpoints allow users to interact with the system, including creating, retrieving, updating, and deleting various resources. The API is designed to be consumed by third-party applications and provides full CRUD (Create, Read, Update, Delete) functionality for all resources.
+The following is a list of the available API endpoints in the application. These endpoints allow users to interact with the system, including creating, retrieving, updating, and deleting various resources. The API is designed to be consumed by third-party applications and provides full CRUD (Create, Read, Update, Delete) functionality for all resources.
 
 ### `POST /register`
 - **Purpose**: Registers a new user in the application.
@@ -221,6 +222,27 @@ The database schema includes multiple models to represent the key entities of th
 
 - **Many-to-Many Relationship**:
   - A **user** can follow many other **users** and can be followed by many users. This is implemented via the **Follower** model, which establishes a many-to-many relationship between users, allowing them to follow each other.
+
+### Pending Features: Follower and Comment Models
+
+The **Follower** and **Comment** models have been designed and implemented in the database schema. However, their functionality has not yet been integrated into the API endpoints or the front-end interface. 
+
+#### Planned Enhancements
+1. **Follower Model**:
+   - Will allow users to follow and unfollow other DJs, enabling a social network-like connection.
+   - Future API endpoints will include functionalities to:
+     - Follow a user.
+     - Retrieve a list of followers and following for a specific user.
+   - This will provide features like personalized feeds or notifications based on user connections.
+
+2. **Comment Model**:
+   - Will enable users to leave comments on tracks to facilitate interaction and feedback.
+   - Planned API endpoints will include:
+     - Posting comments on a track.
+     - Viewing all comments related to a specific track.
+   - This will allow DJs to engage with their audience and gather insights on their music.
+
+These models are key to enhancing the app's social and interactive elements and will be prioritised in future development cycles.
 
 ---
 
