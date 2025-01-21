@@ -20,7 +20,7 @@ class TrackSerializer(serializers.ModelSerializer):
     def get_audio_file_url(self, obj):
         if obj.audio_file:
             cloudinary_base_url = "https://res.cloudinary.com/dmylma7bf"
-            audio_file_url = f"{cloudinary_base_url}/{obj.audio_file}"
+            audio_file_url = f"{cloudinary_base_url}/{obj.audio_file.url}"
             return audio_file_url
         return None
 
