@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 from django.conf import settings
 from django.db.models import Avg
 from profiles.models import Profile
+from cloudinary.models import CloudinaryField
+
 
 class Track(models.Model):
     GENRE_CHOICES = [
@@ -32,7 +34,7 @@ class Track(models.Model):
         blank=False,
         null=False
     )
-    audio_file = models.FileField(upload_to='audio_files/', blank=True, null=True)
+    audio_file = CloudinaryField('audio', resource_type='raw', blank=True, null=True)
     album_cover = models.ImageField(
         upload_to='album_covers/',
         default='../default_cover',
