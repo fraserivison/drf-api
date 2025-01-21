@@ -5,6 +5,7 @@ class TrackSerializer(serializers.ModelSerializer):
     owner = serializers.ReadOnlyField(source='owner.username')
     average_rating = serializers.ReadOnlyField()
     ratings_count = serializers.ReadOnlyField()
+    audio_file_url = serializers.SerializerMethodField()
 
     def validate_audio_file(self, value):
         if value is None:
@@ -15,6 +16,13 @@ class TrackSerializer(serializers.ModelSerializer):
         if not value.name.endswith(('.mp3', '.wav', '.flac')):
             raise serializers.ValidationError('Invalid audio file format!')
         return value
+
+    def get_audio_file_url(self, obj):
+        if obj.audio_file:
+            cloudinary_base_url = "https://res.cloudinary.com/dmylma7bf"
+            audio_file_url = f"{cloudinary_base_url}/{obj.audio_file}"
+            return audio_file_url
+        return None
 
     def update(self, instance, validated_data):
         for field in validated_data:
@@ -27,5 +35,5 @@ class TrackSerializer(serializers.ModelSerializer):
         fields = [
             'id', 'owner', 'created_at', 'updated_at', 'title', 
             'description', 'genre', 'audio_file', 'album_cover',
-            'average_rating', 'ratings_count',
+            'average_rating', 'ratings_count', 'audio_file_url',
         ]
