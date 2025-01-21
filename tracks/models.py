@@ -1,11 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.core.files.storage import FileSystemStorage
 from django.conf import settings
 from django.db.models import Avg
 from profiles.models import Profile
-
-local_storage = FileSystemStorage(location=settings.MEDIA_ROOT)
 
 class Track(models.Model):
     GENRE_CHOICES = [
@@ -35,10 +32,9 @@ class Track(models.Model):
         blank=False,
         null=False
     )
-    audio_file = models.FileField(upload_to='audio_files/', storage=local_storage, blank=True, null=True)
+    audio_file = models.FileField(upload_to='audio_files/', blank=True, null=True)
     album_cover = models.ImageField(
         upload_to='album_covers/',
-        storage=local_storage,
         default='../default_cover',
         blank=True
     )
@@ -56,5 +52,6 @@ class Track(models.Model):
         self.average_rating = avg_rating if avg_rating else 0
         self.ratings_count = self.ratings.count()
         self.save()
+
 
 
