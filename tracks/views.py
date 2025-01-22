@@ -3,6 +3,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from django.db.models import Count, Avg
 from profiles.models import Profile
 from .models import Track
+from .serializers import TrackSerializer
 from drf_api.permissions import IsownerOrReadOnly
 
 class TrackList(generics.ListCreateAPIView):
