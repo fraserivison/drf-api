@@ -1,3 +1,9 @@
+"""
+URLs for the profiles app.
+
+This module defines the URL patterns for viewing and updating user profiles.
+"""
+
 from django.urls import path
 from profiles import views
 

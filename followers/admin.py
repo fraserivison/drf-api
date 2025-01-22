@@ -1,3 +1,7 @@
-from django.contrib import admin
+"""
+Admin configuration for the followers app.
 
-# Register your models here.
+This file contains the admin interface registration for the followers app models.
+"""
+
+# Not used for this implementation

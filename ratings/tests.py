@@ -1,13 +1,25 @@
+"""
+This module contains test cases for the Rating model, ensuring that users
+can rate tracks only when logged in, and that the system behaves as expected
+with respect to ratings.
+"""
+
 from django.contrib.auth.models import User
 from rest_framework.test import APITestCase, APIClient
 from rest_framework import status
-from .models import Rating
 from tracks.models import Track
+from .models import Rating
 
 class RatingTests(APITestCase):
+    """
+    Test suite for the Rating model, verifying user permissions and rating logic.
+    """
+
     def setUp(self):
-        self.user = User.objects.create_user(owner='testuser', password='password123')
+        # Create a user for testing
+        self.user = User.objects.create_user(username='testuser', password='password123')
         
+        # Create a track for testing
         self.track = Track.objects.create(
             owner=self.user,
             title='Test Track',
@@ -28,4 +40,5 @@ class RatingTests(APITestCase):
 
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
         self.assertEqual(Rating.objects.count(), 0)
+
 

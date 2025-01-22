@@ -1,3 +1,10 @@
+"""
+Tests for the followers app.
+
+This file contains unit tests for the follower functionality, such as following, unfollowing, 
+and retrieving follower details. It ensures the proper validation of follow relationships.
+"""
+
 from django.contrib.auth.models import User
 from rest_framework.test import APITestCase
 from rest_framework import status
@@ -5,10 +12,17 @@ from .models import Follower
 
 
 class FollowerTests(APITestCase):
+    """
+    Unit tests for the Follower model and related functionality.
+    Ensures that users can follow, unfollow, and retrieve follower details.
+    """
     def setUp(self):
-        self.user1 = User.objects.create_user(owner='user1', password='testpass')
-        self.user2 = User.objects.create_user(owner='user2', password='testpass')
-        self.client.login(owner='user1', password='testpass')
+        """
+        Set up test environment by creating users and logging in.
+        """
+        self.user1 = User.objects.create_user(username='user1', password='testpass')
+        self.user2 = User.objects.create_user(username='user2', password='testpass')
+        self.client.login(username='user1', password='testpass')
         Follower.objects.all().delete()
 
     def test_follow_user(self):
@@ -55,7 +69,7 @@ class FollowerTests(APITestCase):
         response = self.client.get(f'/followers/{follow.id}/')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-        self.assertEqual(response.data['owner'], self.user1.owner)
+        self.assertEqual(response.data['owner'], self.user1.username)
         self.assertEqual(response.data['followed'], self.user2.id)
 
     def test_follow_self(self):
@@ -67,5 +81,3 @@ class FollowerTests(APITestCase):
         self.assertIn('You cannot follow yourself.', str(response.data))
 
         self.assertFalse(Follower.objects.filter(owner=self.user1, followed=self.user1).exists())
-
-

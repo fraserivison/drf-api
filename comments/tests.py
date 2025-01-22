@@ -1,8 +1,8 @@
 from django.contrib.auth.models import User
 from rest_framework.test import APITestCase
 from rest_framework import status
-from .models import Comment
 from tracks.models import Track
+from .models import Comment
 import json
 
 

@@ -5,9 +5,9 @@ This file contains the views for listing, creating, retrieving, updating, and de
 """
 
 from rest_framework import generics, permissions
+from drf_api.permissions import IsownerOrReadOnly
 from .models import Event
 from .serializers import EventSerializer
-from drf_api.permissions import IsownerOrReadOnly
 
 class EventList(generics.ListCreateAPIView):
     """

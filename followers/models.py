@@ -1,3 +1,10 @@
+"""
+Models for the followers app.
+
+This file defines the Follower model, which represents the
+relationship between users where one follows another.
+"""
+
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -5,6 +12,7 @@ class Follower(models.Model):
     """
     Follower model for the relationship between users:
     'owner' is the user who is following, 'followed' is the user being followed.
+
     The 'UniqueConstraint' ensures that duplicate follow relationships are not allowed.
     """
     owner = models.ForeignKey(User, related_name='following', on_delete=models.CASCADE)
@@ -19,6 +27,3 @@ class Follower(models.Model):
 
     def __str__(self):
         return f'{self.owner} follows {self.followed}'
-
-
-

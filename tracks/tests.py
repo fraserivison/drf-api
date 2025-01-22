@@ -1,16 +1,31 @@
-from django.contrib.auth.models import User
-from profiles.models import Profile
+"""
+Tests for the Track model and its API endpoints.
+"""
+
 from rest_framework.test import APITestCase
 from rest_framework import status
-from .models import Track
 from django.core.files.uploadedfile import SimpleUploadedFile
+from django.contrib.auth.models import User
+from .models import Track
+
 
 class TrackTests(APITestCase):
-    def setUp(self):
-        self.user = User.objects.create_user(owner='testuser', password='password123')
-        self.client.login(owner='testuser', password='password123')
+    """
+    Tests for the Track model API endpoints, including creation, deletion, and updates.
+    """
 
-        audio_file = SimpleUploadedFile("test_audio.mp3", b"file_content", content_type="audio/mpeg")
+    def setUp(self):
+        """
+        Set up test data, including a user and a test track.
+        """
+        self.user = User.objects.create_user(username='testuser', password='password123')
+        self.client.login(username='testuser', password='password123')
+
+        audio_file = SimpleUploadedFile(
+            "test_audio.mp3", 
+            b"file_content", 
+            content_type="audio/mpeg"
+        )
         self.track = Track.objects.create(
             owner=self.user,
             title="Test Track",
@@ -24,7 +39,11 @@ class TrackTests(APITestCase):
         """
         Track.objects.all().delete()
 
-        audio_file = SimpleUploadedFile("test_audio.mp3", b"file_content", content_type="audio/mpeg")
+        audio_file = SimpleUploadedFile(
+            "test_audio.mp3", 
+            b"file_content", 
+            content_type="audio/mpeg"
+        )
         data = {
             "title": "Test Track",
             "description": "This is a test track.",
@@ -48,7 +67,11 @@ class TrackTests(APITestCase):
         """
         self.client.logout()
 
-        audio_file = SimpleUploadedFile("test_audio.mp3", b"file_content", content_type="audio/mpeg")
+        audio_file = SimpleUploadedFile(
+            "test_audio.mp3", 
+            b"file_content", 
+            content_type="audio/mpeg"
+        )
         data = {
             "title": "Test Track",
             "description": "This is a test track.",
@@ -78,7 +101,11 @@ class TrackTests(APITestCase):
         """
         Test that an invalid audio file format (e.g., .mp4) is rejected.
         """
-        audio_file = SimpleUploadedFile("test_audio.mp4", b"file_content", content_type="video/mp4")
+        audio_file = SimpleUploadedFile(
+            "test_audio.mp4", 
+            b"file_content", 
+            content_type="video/mp4"
+        )
         data = {
             "title": "Test Track",
             "description": "This is a test track.",
@@ -95,7 +122,11 @@ class TrackTests(APITestCase):
         """
         Test that a track can be created without optional fields (album_cover, description).
         """
-        audio_file = SimpleUploadedFile("test_audio.mp3", b"file_content", content_type="audio/mpeg")
+        audio_file = SimpleUploadedFile(
+            "test_audio.mp3", 
+            b"file_content", 
+            content_type="audio/mpeg"
+        )
         data = {
             "title": "Test Track Without Optional Fields",
             "genre": "house",
@@ -138,7 +169,11 @@ class TrackTests(APITestCase):
         """
         Test that an authenticated user can update a track's details.
         """
-        audio_file = SimpleUploadedFile("test_audio.mp3", b"file_content", content_type="audio/mpeg")
+        audio_file = SimpleUploadedFile(
+            "test_audio.mp3", 
+            b"file_content", 
+            content_type="audio/mpeg"
+        )
         data = {
             "title": "Original Track Title",
             "description": "Original description",
@@ -150,7 +185,11 @@ class TrackTests(APITestCase):
 
         track = Track.objects.first()
 
-        updated_audio_file = SimpleUploadedFile("updated_audio.mp3", b"new_file_content", content_type="audio/mpeg")
+        updated_audio_file = SimpleUploadedFile(
+            "updated_audio.mp3", 
+            b"new_file_content", 
+            content_type="audio/mpeg"
+        )
         updated_data = {
             "title": "Updated Track Title",
             "description": "Updated description",

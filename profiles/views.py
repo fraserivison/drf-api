@@ -1,10 +1,17 @@
+"""
+Views for the profiles app.
+
+This module contains the views for listing, retrieving, and updating profiles.
+It also includes a custom login view that returns the profile ID.
+"""
+
 from rest_framework import generics, filters
 from django_filters.rest_framework import DjangoFilterBackend
+from dj_rest_auth.views import LoginView
+from drf_api.permissions import IsownerOrReadOnly
 from .models import Profile
 from .serializers import ProfileSerializer
-from drf_api.permissions import IsownerOrReadOnly
-from dj_rest_auth.views import LoginView
-from rest_framework.response import Response
+
 
 class ProfileList(generics.ListAPIView):
     """
@@ -17,12 +24,10 @@ class ProfileList(generics.ListAPIView):
         filters.OrderingFilter,
         DjangoFilterBackend,
     ]
-    
     filterset_fields = [
         'owner__following__followed__profile',
         'owner__followed__owner__profile',
     ]
-    
     ordering_fields = [
         'followers_count',
         'following_count',
@@ -41,13 +46,14 @@ class ProfileDetail(generics.RetrieveUpdateAPIView):
     serializer_class = ProfileSerializer
     permission_classes = [IsownerOrReadOnly]
 
+
 class CustomLoginView(LoginView):
+    """
+    Custom login view that adds the profile ID to the response data.
+    """
     def get_response(self):
         response = super().get_response()
-
         user = self.user
-        
-        profile = user.profile 
-        
+        profile = user.profile
         response.data['profile_id'] = profile.id
-        return response  
+        return response
