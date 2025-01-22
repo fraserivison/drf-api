@@ -1,3 +1,8 @@
-from django.contrib import admin
+"""
+Admin configuration for the events app.
 
-# Register your models here.
+Includes model registration and customization for the Django admin site.
+"""
+
+from django.contrib import admin
+# Not used for this implementation

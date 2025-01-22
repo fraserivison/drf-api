@@ -1,10 +1,17 @@
+"""
+Models for the events app.
+
+This file contains the model definitions for the events, including the Event model.
+"""
+
 from django.db import models
 from django.contrib.auth.models import User
 
 class Event(models.Model):
     """
     Event model to allow users to advertise events.
-    Includes details like name, date, location, genre, etc.
+
+    This model includes details like name, date, location, genre, and description for each event.
     """
     GENRE_CHOICES = [
         ('house', 'House'),
@@ -38,5 +45,3 @@ class Event(models.Model):
 
     def __str__(self):
         return self.name
-
-

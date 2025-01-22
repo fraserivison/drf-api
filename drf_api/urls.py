@@ -1,10 +1,16 @@
+"""
+URL configuration for the drf_api project.
+
+The `urlpatterns` list routes URLs to views.
+"""
+
 from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
-from .views import root_route, logout_route
 from profiles.views import CustomLoginView
+from .views import root_route, logout_route
 
 urlpatterns = [
     # Root route
@@ -40,6 +46,3 @@ urlpatterns = [
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
-
-

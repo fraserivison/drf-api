@@ -1,13 +1,27 @@
+"""
+Tests for the events app.
+
+This file contains test cases for creating, editing, and deleting events.
+"""
+
+from datetime import datetime, timedelta
 from django.contrib.auth.models import User
 from rest_framework.test import APITestCase
 from rest_framework import status
 from events.models import Event
-from datetime import datetime, timedelta
 
 class EventTests(APITestCase):
+    """
+    Test case for event creation, editing, and deletion functionality.
+    """
+
     def setUp(self):
-        self.user = User.objects.create_user(owner='testuser', password='testpass')
-        self.client.login(owner='testuser', password='testpass')
+        """
+        Set up the test environment, including creating a test user
+        and an initial event.
+        """
+        self.user = User.objects.create_user(username='testuser', password='testpass')
+        self.client.login(username='testuser', password='testpass')
 
         self.event = Event.objects.create(
             owner=self.user,
@@ -19,6 +33,9 @@ class EventTests(APITestCase):
         )
 
     def test_create_event(self):
+        """
+        Test event creation functionality.
+        """
         data = {
             'name': 'Test Event',
             'description': 'A test event.',
@@ -31,9 +48,12 @@ class EventTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
         event = Event.objects.get(id=response.data['id'])
-        self.assertEqual(event.owner.owner, 'testuser')
+        self.assertEqual(event.owner.username, 'testuser')
 
     def test_edit_event(self):
+        """
+        Test event editing functionality.
+        """
         updated_data = {
             'name': 'Updated Event',
             'description': 'Updated description.',
@@ -52,8 +72,12 @@ class EventTests(APITestCase):
         self.assertEqual(self.event.location, 'Updated location')
 
     def test_delete_event(self):
+        """
+        Test event deletion functionality.
+        """
         response = self.client.delete(f'/events/{self.event.id}/')
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
         with self.assertRaises(Event.DoesNotExist):
             Event.objects.get(id=self.event.id)
+

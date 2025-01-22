@@ -9,10 +9,10 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
-import dj_database_url
-from pathlib import Path
 import os
 import re
+from pathlib import Path
+import dj_database_url
 
 if os.path.exists('env.py'):
     import env
@@ -156,7 +156,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-        
 ROOT_URLCONF = 'drf_api.urls'
 
 TEMPLATES = [
@@ -179,7 +178,7 @@ WSGI_APPLICATION = 'drf_api.wsgi.application'
 
 ACCOUNT_EMAIL_REQUIRED = False
 ACCOUNT_EMAIL_VERIFICATION = 'none'
-ACCOUNT_owner_REQUIRED = True
+ACCOUNT_OWNER_REQUIRED = True
 ACCOUNT_AUTHENTICATION_METHOD = 'owner'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
@@ -247,5 +246,3 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-

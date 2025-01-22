@@ -1,3 +1,9 @@
+"""
+Views for the events app.
+
+This file contains the views for listing, creating, retrieving, updating, and deleting events.
+"""
+
 from rest_framework import generics, permissions
 from .models import Event
 from .serializers import EventSerializer
