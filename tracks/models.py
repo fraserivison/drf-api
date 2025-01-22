@@ -1,19 +1,12 @@
-"""
-This module defines the Track model for the music-sharing app.
-It contains information about tracks such as title, description, genre, audio, album cover, and ratings.
-"""
-
 from django.db import models
 from django.contrib.auth.models import User
-from cloudinary.models import CloudinaryField
+from django.conf import settings
+from django.db.models import Avg
 from profiles.models import Profile
+from cloudinary.models import CloudinaryField
+
 
 class Track(models.Model):
-    """
-    Represents a music track in the system. Each track can be rated by users and includes metadata 
-    like title, description, genre, and audio file.
-    """
-    
     GENRE_CHOICES = [
         ('house', 'House'),
         ('tech_house', 'Tech House'),
@@ -57,20 +50,10 @@ class Track(models.Model):
         return f'{self.id} {self.title}'
 
     def update_average_rating(self):
-        """
-        Updates the average rating for this track by calculating the average of all associated ratings.
-        Also updates the count of ratings for the track.
-        """
         avg_rating = self.ratings.aggregate(Avg('rating'))['rating__avg']
         self.average_rating = avg_rating if avg_rating else 0
         self.ratings_count = self.ratings.count()
         self.save()
-
-    def ratings(self):
-        """
-        Returns all ratings for this track. This is required for the update_average_rating method.
-        """
-        return self.rating_set.all()
 
 
 

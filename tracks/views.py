@@ -1,15 +1,13 @@
 from rest_framework import generics, permissions, filters
 from django_filters.rest_framework import DjangoFilterBackend
 from django.db.models import Count, Avg
-from profiles.models import Profile
 from .models import Track
 from .serializers import TrackSerializer
+from profiles.models import Profile
 from drf_api.permissions import IsownerOrReadOnly
 
+
 class TrackList(generics.ListCreateAPIView):
-    """
-    API view to list all tracks or create a new track.
-    """
     serializer_class = TrackSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     queryset = Track.objects.annotate(
@@ -27,18 +25,12 @@ class TrackList(generics.ListCreateAPIView):
     ordering_fields = ['ratings_count_annotation', 'created_at']
 
     def perform_create(self, serializer):
-        """
-        Create a new track, linking it to the user's profile.
-        """
         user = self.request.user
         profile, _ = Profile.objects.get_or_create(owner=user)
-        serializer.save(owner=user, profile=profile)
+        serializer.save(owner=user, profile=profile)  
 
 
 class TrackDetail(generics.RetrieveUpdateDestroyAPIView):
-    """
-    API view to retrieve, update or delete a track.
-    """
     serializer_class = TrackSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     queryset = Track.objects.annotate(
@@ -47,13 +39,9 @@ class TrackDetail(generics.RetrieveUpdateDestroyAPIView):
     )
 
     def perform_update(self, serializer):
-        """
-        Update the track, keeping the owner as the current user.
-        """
         serializer.save(owner=self.request.user, partial=True)
 
     def perform_destroy(self, instance):
-        """
-        Delete the track.
-        """
         instance.delete()
+
+
