@@ -1,8 +1,3 @@
-"""
-This module contains the views for the ratings app, defining
-the views for listing, creating, updating, and deleting ratings.
-"""
-
 from rest_framework import generics, permissions
 from drf_api.permissions import IsownerOrReadOnly
 from ratings.models import Rating
@@ -27,3 +22,5 @@ class RatingDetail(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [IsownerOrReadOnly]
     serializer_class = RatingSerializer
     queryset = Rating.objects.all()
+
+
