@@ -16,10 +16,15 @@ class TrackSerializer(serializers.ModelSerializer):
         """
         if value is None:
             return value
-        if value.size > 100 * 1024 * 1024:
+        
+        # Check the size of the uploaded file (using `bytes` for Cloudinary)
+        if value.size > 100 * 1024 * 1024:  # 100MB limit
             raise serializers.ValidationError('Audio file size larger than 100MB!')
+        
+        # Check for valid audio file formats
         if not value.name.endswith(('.mp3', '.wav', '.flac')):
             raise serializers.ValidationError('Invalid audio file format!')
+        
         return value
 
     def get_audio_file_url(self, obj):
