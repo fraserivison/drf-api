@@ -55,5 +55,3 @@ class Track(models.Model):
         self.ratings_count = self.ratings.count()
         self.save()
 
-
-
