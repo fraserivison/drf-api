@@ -18,6 +18,7 @@
 - [Security Considerations](#security-considerations)
 - [Git & GitHub Usage](#git-and-github-usage)
 - [Front-End Integration](#front-end-integration)
+- [Credits](#credits)
 
 [Back to top](#table-of-contents)
 
@@ -491,7 +492,7 @@ Once the deployment process is complete, the app should be live on Heroku.
 ## Git & GitHub Usage
 
 - **Version Control**: All changes are tracked using Git and pushed to GitHub. Features were developed in separate branches, and GitHub Issues were used to manage tasks and bugs.
-  - Example commit message: "Implemented JWT authentication for login endpoint."
+  - Example commit message: "Implement JWT authentication for login endpoint."
 - **Commit Messages**: Keep messages clear and descriptive, following best practices (e.g., “Refactored track upload endpoint”).
 - **GitHub Projects**: If applicable, mention using GitHub Projects for task management and agile workflows.
 
@@ -503,5 +504,12 @@ Once the deployment process is complete, the app should be live on Heroku.
 
 - **CORS**: Ensure that Cross-Origin Resource Sharing (CORS) is properly configured to allow the front-end app to interact with the API.
 
+---
+
+## Credits
+
+- **Code Institute's DRF Walkthrough Project** – This project was inspired by the Django REST Framework (DRF) walkthrough project from Code Institute, which helped guide the backend setup and structure of this application.
+- **Open-source code from the internet** – Several pieces of code and resources were sourced from open-source repositories available on the internet, which were used to implement functionality such as authentication and file uploads.
+- **Django REST Framework** – A huge thank you to the [Django REST Framework documentation](https://www.django-rest-framework.org/) for providing comprehensive guidance and examples throughout the development of this project.
 
 [Back to top](#table-of-contents)
