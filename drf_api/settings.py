@@ -54,7 +54,7 @@ REST_AUTH_SERIALIZERS = {
 
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = [
     os.environ.get('ALLOWED_HOST'),
@@ -76,7 +76,7 @@ CORS_ALLOWED_ORIGINS = [
     "https://wave-drf-api-1157a4fa181b.herokuapp.com",
 ]
 
-CORS_ALLOW_HEADERS = [ "Authorization", "Content-Type", ]
+CORS_ALLOW_HEADERS = ["Authorization", "Content-Type", ]
 
 CORS_ALLOW_ALL_ORIGINS = True
 
