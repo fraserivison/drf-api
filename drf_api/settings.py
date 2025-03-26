@@ -54,7 +54,7 @@ REST_AUTH_SERIALIZERS = {
 
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
-DEBUG = os.environ.get('DEBUG', 'False') == 'True'
+DEBUG = False #os.environ.get('DEBUG', 'False') == 'True'
 
 ALLOWED_HOSTS = [
     os.environ.get('ALLOWED_HOST'),
@@ -175,9 +175,7 @@ ACCOUNT_AUTHENTICATION_METHOD = 'owner'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-DATABASES = {
-        'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
-}
+DATABASE_URL = os.environ.get("DATABASE_URL", "").decode('utf-8') if isinstance(os.environ.get("DATABASE_URL"), bytes) else os.environ.get("DATABASE_URL")
 
 AUTH_PASSWORD_VALIDATORS = [
     {
