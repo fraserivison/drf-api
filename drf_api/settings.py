@@ -54,7 +54,7 @@ REST_AUTH_SERIALIZERS = {
 
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
-DEBUG = True #os.environ.get('DEBUG', 'False') == 'True'
+DEBUG = True
 
 ALLOWED_HOSTS = [
     os.environ.get('ALLOWED_HOST'),
