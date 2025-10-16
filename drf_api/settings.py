@@ -107,7 +107,7 @@ REST_FRAMEWORK = {
 if not DEBUG:
     REST_FRAMEWORK["DEFAULT_RENDERER_CLASSES"] = ["rest_framework.renderers.JSONRenderer"]
 
-JWT_AUTH_COOKIE = "my-app-auth"
+JWT_AUTH_COOKIE = "my-access-token"
 JWT_AUTH_REFRESH_COOKIE = "my-refresh-token"
 JWT_AUTH_HTTPONLY = True
 
@@ -137,6 +137,7 @@ CORS_ALLOWED_ORIGINS = [
     "https://3000-fraserivison-waveapp-f3at7xflsi4.ws-eu117.gitpod.io",
     "http://localhost:3000",
     "https://wave-drf-api-1157a4fa181b.herokuapp.com",
+    "https://fraserivison.github.io",
 ]
 
 CSRF_TRUSTED_ORIGINS = [
@@ -144,7 +145,13 @@ CSRF_TRUSTED_ORIGINS = [
     "https://3000-fraserivison-waveapp-f3at7xflsi4.ws-eu117.gitpod.io",
     "https://8000-fraserivison-drfapi-d10c7zwdb71.ws-eu117.gitpod.io",
     "https://wave-drf-api-1157a4fa181b.herokuapp.com",
+    "https://fraserivison.github.io",
 ]
+
+CSRF_COOKIE_SAMESITE = "None"
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SAMESITE = "None"
+SESSION_COOKIE_SECURE = True
 
 # --------------------
 # Templates, WSGI, etc
