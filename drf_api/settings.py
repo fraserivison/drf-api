@@ -17,7 +17,6 @@ ALLOWED_HOSTS = [
     "localhost",
     "8000-fraserivison-drfapi-d10c7zwdb71.ws-eu117.gitpod.io",
     "wave-drf-api-1157a4fa181b.herokuapp.com",
-    "fraserivison.github.io",  # Added to allow GitHub Pages
 ]
 
 # --------------------
@@ -70,7 +69,7 @@ SITE_ID = 1
 # Middleware
 # --------------------
 MIDDLEWARE = [
-    "corsheaders.middleware.CorsMiddleware",  # Keep CORS middleware at the top
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -110,7 +109,7 @@ if not DEBUG:
 
 JWT_AUTH_COOKIE = "my-access-token"
 JWT_AUTH_REFRESH_COOKIE = "my-refresh-token"
-JWT_AUTH_HTTPONLY = True  # Keep JWT cookie HttpOnly for security
+JWT_AUTH_HTTPONLY = True
 
 # --------------------
 # Allauth settings
@@ -129,30 +128,35 @@ EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 # --------------------
 # CORS / CSRF
 # --------------------
-CORS_ALLOW_ALL_ORIGINS = False  # Turn off in favor of explicit origins
-CORS_ALLOW_CREDENTIALS = True  # Allow cookies to be sent cross-site
+CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOW_HEADERS = ["Authorization", "Content-Type"]
 CORS_ALLOW_METHODS = ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"]
 
-CORS_ALLOWED_ORIGINS = [
-    "https://3000-fraserivison-waveapp-f3at7xflsi4.ws-eu117.gitpod.io",
-    "http://localhost:3000",
-    "https://wave-drf-api-1157a4fa181b.herokuapp.com",
-    "https://fraserivison.github.io",  # Added for GitHub Pages
-]
-
-CSRF_TRUSTED_ORIGINS = [
-    "https://wave-app-b7b6d5495ba9.herokuapp.com",
-    "https://3000-fraserivison-waveapp-f3at7xflsi4.ws-eu117.gitpod.io",
-    "https://8000-fraserivison-drfapi-d10c7zwdb71.ws-eu117.gitpod.io",
-    "https://wave-drf-api-1157a4fa181b.herokuapp.com",
-    "https://fraserivison.github.io",  # Added for GitHub Pages
-]
-
-CSRF_COOKIE_SAMESITE = "None"  # Needed for cross-site cookies
-CSRF_COOKIE_SECURE = True
-SESSION_COOKIE_SAMESITE = "None"  # Needed for cross-site cookies
-SESSION_COOKIE_SECURE = True
+if DEBUG:
+    # Local development
+    CORS_ALLOWED_ORIGINS = [
+        "http://localhost:3000",
+        "http://127.0.0.1:3000",
+        "https://3000-fraserivison-waveapp-f3at7xflsi4.ws-eu117.gitpod.io",
+    ]
+    CSRF_TRUSTED_ORIGINS = CORS_ALLOWED_ORIGINS
+    CSRF_COOKIE_SECURE = False
+    SESSION_COOKIE_SECURE = False
+    CSRF_COOKIE_SAMESITE = "Lax"
+    SESSION_COOKIE_SAMESITE = "Lax"
+else:
+    # Production
+    CORS_ALLOWED_ORIGINS = [
+        "https://fraserivison.github.io",
+    ]
+    CSRF_TRUSTED_ORIGINS = [
+        "https://fraserivison.github.io",
+        "https://wave-app-b7b6d5495ba9.herokuapp.com",
+    ]
+    CSRF_COOKIE_SECURE = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SAMESITE = "None"
+    SESSION_COOKIE_SAMESITE = "None"
 
 # --------------------
 # Templates, WSGI, etc
