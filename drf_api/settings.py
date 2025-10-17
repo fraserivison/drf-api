@@ -126,37 +126,26 @@ AUTHENTICATION_BACKENDS = (
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 # --------------------
-# CORS / CSRF
+# CORS / CSRF (Simplified & permissive for portfolio use)
 # --------------------
+CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
-CORS_ALLOW_HEADERS = ["Authorization", "Content-Type"]
-CORS_ALLOW_METHODS = ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"]
+CORS_ALLOW_HEADERS = ["*"]
+CORS_ALLOW_METHODS = ["*"]
 
-if DEBUG:
-    # Local development
-    CORS_ALLOWED_ORIGINS = [
-        "http://localhost:3000",
-        "http://127.0.0.1:3000",
-        "https://3000-fraserivison-waveapp-f3at7xflsi4.ws-eu117.gitpod.io",
-    ]
-    CSRF_TRUSTED_ORIGINS = CORS_ALLOWED_ORIGINS
-    CSRF_COOKIE_SECURE = False
-    SESSION_COOKIE_SECURE = False
-    CSRF_COOKIE_SAMESITE = "Lax"
-    SESSION_COOKIE_SAMESITE = "Lax"
-else:
-    # Production
-    CORS_ALLOWED_ORIGINS = [
-        "https://fraserivison.github.io",
-    ]
-    CSRF_TRUSTED_ORIGINS = [
-        "https://fraserivison.github.io",
-        "https://wave-app-b7b6d5495ba9.herokuapp.com",
-    ]
-    CSRF_COOKIE_SECURE = True
-    SESSION_COOKIE_SECURE = True
-    CSRF_COOKIE_SAMESITE = "None"
-    SESSION_COOKIE_SAMESITE = "None"
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+    "https://fraserivison.github.io",
+    "https://wave-app-b7b6d5495ba9.herokuapp.com",
+    "https://wave-drf-api-1157a4fa181b.herokuapp.com",
+    "https://3000-fraserivison-waveapp-f3at7xflsi4.ws-eu117.gitpod.io",
+]
+
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SAMESITE = None
+SESSION_COOKIE_SAMESITE = None
 
 # --------------------
 # Templates, WSGI, etc
@@ -204,3 +193,4 @@ USE_TZ = True
 # --------------------
 STATIC_URL = "/static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
