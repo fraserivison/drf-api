@@ -18,13 +18,18 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",
-    "corsheaders",  # 👈 must be above your apps that use CORS
-    "api",  # replace with your app name(s)
+    "corsheaders",
+    "events",
+    "comments",
+    "followers",
+    "ratings",
+    "tracks",
+    "profiles",
 ]
 
 # --- Middleware ---
 MIDDLEWARE = [
-    "corsheaders.middleware.CorsMiddleware",  # 👈 must come before CommonMiddleware
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
