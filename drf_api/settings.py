@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "django.contrib.sites",  # ✅ must be above allauth
+    "django.contrib.sites",
 
     # Third-party apps
     "cloudinary_storage",
@@ -145,7 +145,7 @@ CORS_ALLOW_METHODS = ["*"]
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
-    "https://fraserivison.github.io",
+    "https://fraserivison.github.io/wave-app",
     "https://wave-app-b7b6d5495ba9.herokuapp.com",
     "https://wave-drf-api-1157a4fa181b.herokuapp.com",
     "https://3000-fraserivison-waveapp-f3at7xflsi4.ws-eu117.gitpod.io",
