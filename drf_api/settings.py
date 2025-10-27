@@ -90,21 +90,17 @@ MIDDLEWARE = [
 # REST Framework & Auth
 # --------------------
 REST_USE_JWT = True
-REST_AUTH_SERIALIZERS = {
-    "USER_DETAILS_SERIALIZER": "drf_api.serializers.CurrentUserSerializer",
-}
-
-if DEBUG:
-    DEFAULT_AUTH_CLASS = "rest_framework.authentication.SessionAuthentication"
-    JWT_AUTH_SECURE = False
-    JWT_AUTH_SAMESITE = "Lax"
-else:
-    DEFAULT_AUTH_CLASS = "dj_rest_auth.jwt_auth.JWTCookieAuthentication"
-    JWT_AUTH_SECURE = True
-    JWT_AUTH_SAMESITE = "None"
+JWT_AUTH_COOKIE = 'my-app-auth'
+JWT_AUTH_REFRESH_COOKIE = 'my-refresh-token'
+JWT_AUTH_SAMESITE = 'None'
+JWT_AUTH_SECURE = True
+JWT_AUTH_HTTPONLY = True
 
 REST_FRAMEWORK = {
-    "DEFAULT_AUTHENTICATION_CLASSES": [DEFAULT_AUTH_CLASS],
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        'dj_rest_auth.jwt_auth.JWTCookieAuthentication',
+        'rest_framework.authentication.SessionAuthentication'
+    ],
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
     "PAGE_SIZE": 12,
     "DATETIME_FORMAT": "%d %b %Y",
@@ -112,10 +108,6 @@ REST_FRAMEWORK = {
 
 if not DEBUG:
     REST_FRAMEWORK["DEFAULT_RENDERER_CLASSES"] = ["rest_framework.renderers.JSONRenderer"]
-
-JWT_AUTH_COOKIE = "my-access-token"
-JWT_AUTH_REFRESH_COOKIE = "my-refresh-token"
-JWT_AUTH_HTTPONLY = True
 
 # --------------------
 # Allauth settings
@@ -136,56 +128,27 @@ AUTHENTICATION_BACKENDS = (
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 # --------------------
-# CORS / CSRF (permissive for portfolio use)
+# CORS / CSRF settings
 # --------------------
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
-    "http://127.0.0.1:3000", 
-    "https://fraserivison.github.io",
-    "https://wave-app-b7b6d5495ba9.herokuapp.com",
-]
-
 CORS_ALLOW_CREDENTIALS = True
-
-# Make sure these match in production
-JWT_AUTH_SAMESITE = 'None'
-JWT_AUTH_SECURE = True
-CSRF_COOKIE_SAMESITE = 'None'
-SESSION_COOKIE_SAMESITE = 'None'
-
-CORS_ALLOW_HEADERS = [
-    "accept",
-    "accept-encoding",
-    "authorization",
-    "content-type",
-    "dnt",
-    "origin",
-    "user-agent",
-    "x-csrftoken",
-    "x-requested-with",
-]
-CORS_ALLOW_METHODS = [
-    "DELETE",
-    "GET",
-    "OPTIONS",
-    "PATCH",
-    "POST",
-    "PUT",
-]
-
-CSRF_TRUSTED_ORIGINS = [
+CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
     "https://fraserivison.github.io",
     "https://wave-app-b7b6d5495ba9.herokuapp.com",
-    "https://wave-drf-api-1157a4fa181b.herokuapp.com",
-    "https://3000-fraserivison-waveapp-f3at7xflsi4.ws-eu117.gitpod.io",
+    "https://wave-drf-api-1157a4fa181b.herokuapp.com"
 ]
 
-CSRF_COOKIE_SECURE = not DEBUG
-SESSION_COOKIE_SECURE = not DEBUG
-CSRF_COOKIE_SAMESITE = None
-SESSION_COOKIE_SAMESITE = None
+CORS_EXPOSE_HEADERS = ['content-type', 'x-csrftoken']
+CORS_PREFLIGHT_MAX_AGE = 86400
+
+# Cookie Settings
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SAMESITE = 'None'
+SESSION_COOKIE_SAMESITE = 'None'
+CSRF_COOKIE_HTTPONLY = True
+SESSION_COOKIE_HTTPONLY = True
 
 # --------------------
 # Templates, WSGI, etc
