@@ -96,6 +96,14 @@ JWT_AUTH_SAMESITE = 'None'
 JWT_AUTH_SECURE = True
 JWT_AUTH_HTTPONLY = True
 
+REST_AUTH = {
+    'USE_JWT': True,
+    'JWT_AUTH_COOKIE': 'my-app-auth',
+    'JWT_AUTH_REFRESH_COOKIE': 'my-refresh-token',
+    'JWT_AUTH_SAMESITE': 'None',
+    'JWT_AUTH_SECURE': True,
+}
+
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
         'dj_rest_auth.jwt_auth.JWTCookieAuthentication',
@@ -130,6 +138,7 @@ EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 # --------------------
 # CORS / CSRF settings
 # --------------------
+CORS_ORIGIN_ALLOW_ALL = False
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
@@ -139,16 +148,41 @@ CORS_ALLOWED_ORIGINS = [
     "https://wave-drf-api-1157a4fa181b.herokuapp.com"
 ]
 
-CORS_EXPOSE_HEADERS = ['content-type', 'x-csrftoken']
-CORS_PREFLIGHT_MAX_AGE = 86400
+CORS_ALLOW_METHODS = [
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
+]
 
-# Cookie Settings
+CORS_ALLOW_HEADERS = [
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+]
+
+# Ensure cookies work cross-origin
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SAMESITE = 'None'
 SESSION_COOKIE_SAMESITE = 'None'
 CSRF_COOKIE_HTTPONLY = True
 SESSION_COOKIE_HTTPONLY = True
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+    "https://fraserivison.github.io",
+    "https://wave-app-b7b6d5495ba9.herokuapp.com",
+    "https://wave-drf-api-1157a4fa181b.herokuapp.com",
+]
 
 # --------------------
 # Templates, WSGI, etc
