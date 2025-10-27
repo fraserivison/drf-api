@@ -138,10 +138,40 @@ EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 # --------------------
 # CORS / CSRF (permissive for portfolio use)
 # --------------------
-CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000", 
+    "https://fraserivison.github.io",
+    "https://wave-app-b7b6d5495ba9.herokuapp.com",
+]
+
 CORS_ALLOW_CREDENTIALS = True
-CORS_ALLOW_HEADERS = ["*"]
-CORS_ALLOW_METHODS = ["*"]
+
+# Make sure these match in production
+JWT_AUTH_SAMESITE = 'None'
+JWT_AUTH_SECURE = True
+CSRF_COOKIE_SAMESITE = 'None'
+SESSION_COOKIE_SAMESITE = 'None'
+
+CORS_ALLOW_HEADERS = [
+    "accept",
+    "accept-encoding",
+    "authorization",
+    "content-type",
+    "dnt",
+    "origin",
+    "user-agent",
+    "x-csrftoken",
+    "x-requested-with",
+]
+CORS_ALLOW_METHODS = [
+    "DELETE",
+    "GET",
+    "OPTIONS",
+    "PATCH",
+    "POST",
+    "PUT",
+]
 
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:3000",
